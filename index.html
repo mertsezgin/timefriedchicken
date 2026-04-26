@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Time Fried Chicken</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #000;
+    color: #fff;
+    min-height: 100vh;
+  }
+
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      linear-gradient(to bottom, rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.50) 40%, rgba(0,0,0,0.70) 100%),
+      url('pexels-photo-7963144.webp') center/cover no-repeat;
+    z-index: 0;
+  }
+
+  nav {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 2.5rem 2rem 1.5rem;
+  }
+
+  .logo img {
+    height: 80px;
+    width: auto;
+  }
+
+  .content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 2rem;
+    max-width: 700px;
+  }
+
+  .content h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
+
+  .content p {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 0.6rem;
+    line-height: 1.6;
+  }
+
+  .content p.platforms {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .platforms span {
+    color: #f5c842;
+    font-weight: 600;
+  }
+
+  footer {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.6);
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+
+  <nav>
+    <div class="logo">
+      <img src="logo-beyaz-1.png" alt="Time Fried Chicken">
+    </div>
+  </nav>
+
+  <div class="content">
+    <h1>Yapım Aşamasındayız</h1>
+    <p>Yakında yeni yüzümüzle karşınızda olacağız. İlginiz için teşekkür ederiz.</p>
+    <p class="platforms">
+      Restoranımızı ziyaret edebilir veya 
+      <span>YemekSepeti</span>, 
+      <span>Trendyol</span>, 
+      <span>GetirYemek</span> ve 
+      <span>Migros Yemek</span> üzerinden sipariş verebilirsiniz.
+    </p>
+  </div>
+
+  <footer>
+    &copy; TFC 2025
+  </footer>
+</div>
+
+</body>
+</html>
