@@ -1,0 +1,5 @@
+---
+/** public/ikonlar.svg içindeki sembolü gösterir. Tek dosya, önbelleklenir. */
+const { id, boyut = 24, sinif = '' } = Astro.props;
+---
+<svg class={sinif} width={boyut} height={boyut} aria-hidden="true" focusable="false"><use href={`/ikonlar.svg#${id}`} /></svg>

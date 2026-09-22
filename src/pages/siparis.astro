@@ -1,0 +1,69 @@
+---
+import { Image } from 'astro:assets';
+import Temel from '../layouts/Temel.astro';
+import Ikon from '../components/Ikon.astro';
+import { isletme, platformlar } from '../data/isletme.js';
+import trendyol from '../assets/platform/trendyol.webp';
+import yemeksepeti from '../assets/platform/yemeksepeti.webp';
+import getir from '../assets/platform/getir.webp';
+import migrosyemek from '../assets/platform/migrosyemek.webp';
+import kurye from '../assets/paket-servis.png';
+
+const logolar = { trendyol, yemeksepeti, getir, migrosyemek };
+---
+<Temel
+  sayfa="siparis"
+  baslik="Sipariş Ver"
+  aciklama="Time Fried Chicken paket servis: Trendyol Go, Yemeksepeti, Getir Yemek ve Migros Yemek üzerinden sipariş verin ya da telefonla arayın."
+>
+
+<main id="ana-icerik">
+  <section class="bolum">
+    <div class="kapsayici">
+      <div class="bolum-baslik">
+        <span class="ust-etiket">Paket servis</span>
+        <h2>Nereden sipariş vermek istersiniz?</h2>
+        <p>Anlaşmalı platformlardan birini seçin, doğrudan {isletme.marka} sayfasına gidersiniz.</p>
+      </div>
+
+      <div class="platform-izgara">
+        {platformlar.map((p) => (
+          <a class="platform" href={p.url} rel="noopener">
+            <span class="platform-logo platform-logo--gorsel" aria-hidden="true"><Image src={logolar[p.kod]} alt="" width={48} height={48} loading="eager" /></span>
+            <span>
+              <b>{p.ad}</b>
+              <small>Uygulamada aç</small>
+            </span>
+          </a>
+        ))}
+      </div>
+
+      <div class="ikili" style="margin-top:44px">
+        <div>
+          <h3>Telefonla sipariş</h3>
+          <p>Doğrudan bizi arayarak da paket sipariş verebilirsiniz.</p>
+          <a class="dugme dugme--marka" href={`tel:${isletme.telefonHam}`}>
+            <Ikon id="u-telefon" boyut={18} /> {isletme.telefon}
+          </a>
+        </div>
+        <div>
+          <h3>Gel-al</h3>
+          <p>Siparişinizi restorandan teslim almak isterseniz arayıp hazırlatabilirsiniz.<br />
+            {isletme.adres}, {isletme.ilce}</p>
+          <a class="dugme dugme--ikincil" href="/#iletisim">Adres ve saatler</a>
+          <Image class="kurye-gorsel" src={kurye} alt="" width={230} loading="lazy" />
+        </div>
+      </div>
+
+      <div class="uyari-kutu" style="margin-top:44px">
+        <Ikon id="u-uyari" boyut={22} />
+        <div>
+          <p style="margin:0">Platformlardaki fiyatlar, platform hizmet bedelleri nedeniyle restoran içi
+            fiyatlardan farklı olabilir. Restoran içi güncel fiyatlar <a href="/menu/">menü sayfasındadır</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+</Temel>

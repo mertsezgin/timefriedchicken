@@ -1,0 +1,144 @@
+---
+import Temel from '../layouts/Temel.astro';
+import Ikon from '../components/Ikon.astro';
+import UrunKart from '../components/UrunKart.astro';
+import { kategoriler, urunler, guncelleme, TASLAK } from '../data/menu.js';
+import { ALERJENLER, SUZGEC_ALERJENLERI } from '../data/alerjenler.js';
+import { menuyuDogrula, tarihYaz } from '../lib/dogrula.js';
+
+menuyuDogrula(urunler, kategoriler, TASLAK);
+
+const aktif = urunler.filter((u) => u.aktif !== false);
+const grup = (kod) => aktif.filter((u) => u.kategori === kod);
+const ilk = kategoriler[0];
+
+// Lejantta yalnızca menüde gerçekten geçen alerjenler gösterilir.
+const kullanilan = [...new Set(aktif.flatMap((u) => u.alerjenler ?? []))];
+const alerjenVerisiVar = aktif.some((u) => Array.isArray(u.alerjenler));
+const bilinmeyenSayisi = aktif.filter((u) => !Array.isArray(u.alerjenler)).length;
+
+// --- veriden üretilen CSS: seçili kategori vurgusu + alerjen süzgeci ---
+const aktifSeciciler = [
+  `.menu-liste:not(:has(.grup:target)) a[href="#${ilk.kod}"]`,
+  ...kategoriler.map((k) => `.menu-liste:has(#${k.kod}:target) a[href="#${k.kod}"]`),
+];
+const suzgecKurallari = SUZGEC_ALERJENLERI.map((kod) => `
+.menu-liste:has(#f-${kod}:checked) .urun.s-${kod} { display: none; }
+.menu-liste:has(#f-${kod}:checked) .grup:not(:has(.urun:not(.s-${kod}))) .grup-bos { display: block; }`
+).join('');
+
+const uretilenCss = `
+${aktifSeciciler.join(',\n')} {
+  border-color: var(--kirmizi); background: var(--kirmizi); color: var(--beyaz);
+}
+${aktifSeciciler.map((s) => `${s} .ikon-cerceve`).join(',\n')} {
+  background: var(--sari); color: var(--lacivert);
+}
+${suzgecKurallari}`;
+
+const bant = `Fiyatlara <strong>KDV dahildir</strong> · Son güncelleme: <strong>${tarihYaz(guncelleme)}</strong>`;
+---
+<Temel
+  sayfa="menu"
+  baslik="Menü"
+  aciklama="Time Fried Chicken menüsü: hamburger, special, wings, tenders ve içecekler. Gramaj, KDV dahil fiyat ve alerjen bilgisiyle."
+  bant={bant}
+>
+<style is:inline set:html={uretilenCss} />
+
+<main id="ana-icerik" class="menu-liste">
+
+  <section class="bolum filtre-alani" style="padding-block:clamp(24px,4vw,36px)">
+    <div class="kapsayici">
+      <div class="bolum-baslik" style="margin-bottom:20px">
+        <span class="ust-etiket">Menü</span>
+        <h2>Menümüz</h2>
+        <p>Kategori seçin.</p>
+      </div>
+
+      <nav class="filtre-kategoriler" aria-label="Kategoriler">
+        {kategoriler.map((k) => (
+          <a class="filtre-kart" href={`#${k.kod}`}>
+            <span class="ikon-cerceve"><Ikon id={k.ikon} boyut={28} /></span>
+            <b>{k.ad}</b>
+          </a>
+        ))}
+      </nav>
+    </div>
+  </section>
+
+  <section class="bolum" style="padding-top:clamp(26px,4vw,40px)">
+    <div class="kapsayici">
+
+      {kategoriler.map((k) => (
+        <section class={`grup g-${k.kod}`} id={k.kod}>
+          <h2>{k.ad}</h2>
+          <div class="urun-izgara">
+            {grup(k.kod).map((u) => <UrunKart urun={u} tumLink={false} />)}
+          </div>
+          <p class="grup-bos">Seçtiğiniz alerjen süzgecine uyan ürün bu kategoride yok.</p>
+        </section>
+      ))}
+
+      <!-- alerjen bilgisi: ikon açıklamaları ve isteğe bağlı süzgeç -->
+      <section class="alerjen-bolumu" id="alerjen-bilgisi">
+        <h2>Alerjen bilgisi</h2>
+
+        {alerjenVerisiVar && (
+        <div class="alerjen-lejant">
+          <strong style="font-size:.86rem">İkonlar:</strong>
+          {kullanilan.map((kod) => (
+            <span>
+              <span class="alerjen"><Ikon id={ALERJENLER[kod].ikon} boyut={15} /></span>
+              {ALERJENLER[kod].ad}
+            </span>
+          ))}
+          <a class="alerjen-link" href="/alerjenler/" style="color:var(--metin-soluk)">14 alerjenin tam tablosu</a>
+        </div>
+        )}
+
+        {alerjenVerisiVar && (
+        <details class="alerjen-filtre">
+          <summary>Alerjene göre süz</summary>
+          <div class="alerjen-secenekler">
+            {SUZGEC_ALERJENLERI.map((kod) => (
+              <label><input type="checkbox" id={`f-${kod}`} /> {ALERJENLER[kod].ad} içermesin</label>
+            ))}
+          </div>
+          <p style="font-size:.86rem;color:var(--metin-soluk);margin:0 0 6px">
+            Seçiminiz yukarıdaki listeye uygulanır. Bu süzgeç yalnızca ürünün içeriğine bakar;
+            ortak tezgah ve ekipman kaynaklı çapraz bulaşma için
+            <a href="/alerjenler/">alerjen tablosuna</a> bakın.
+          </p>
+        </details>
+        )}
+
+        {bilinmeyenSayisi > 0 && (
+          <div class="veri-uyari">
+            <Ikon id="u-uyari" boyut={18} />
+            <p style="margin:0">
+              <strong>Alerjen bilgileri hazırlanıyor.</strong> Kullandığımız malzemelerin etiketleri
+              tek tek kontrol ediliyor. Tamamlanana kadar alerjeniz varsa lütfen siparişten önce
+              personelimize danışın.
+            </p>
+          </div>
+        )}
+
+        <div class="uyari-kutu" style="margin-top:20px">
+          <Ikon id="u-uyari" boyut={22} />
+          <div>
+            <p>Tavuk ürünleri ile patates <strong>ayrı fritözlerde</strong> kızartılır. Buna rağmen
+              ürünlerimiz gluten, süt, yumurta ve susam içeren malzemelerle <strong>ortak mutfakta</strong>
+              hazırlanır.</p>
+            <p style="margin:0">Alerjiniz varsa sipariş öncesi personelimize bildirin.
+              <a href="/alerjenler/">Ayrıntılı alerjen tablosu</a></p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </section>
+
+</main>
+
+</Temel>

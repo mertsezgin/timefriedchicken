@@ -1,0 +1,68 @@
+---
+import Ikon from './Ikon.astro';
+import { ALERJENLER } from '../data/alerjenler.js';
+import { fiyatYaz } from '../lib/dogrula.js';
+
+const { urun, tumLink = true } = Astro.props;
+
+const alerjenBilinmiyor = !Array.isArray(urun.alerjenler);
+const alerjenler = urun.alerjenler ?? [];
+
+// Alerjen süzgecinin kullandığı sınıflar veriden üretilir, elle yazılmaz.
+const sinif = [
+  'urun',
+  `k-${urun.kategori}`,
+  ...alerjenler.map((a) => `s-${a}`),
+].join(' ');
+---
+<article class={sinif} id={urun.kod}>
+  <div class="urun-gorsel">
+    Ürün görseli 16:11
+    {urun.aci && (
+      <span class={`aci-etiket aci-${urun.aci}`}>
+        <Ikon id="u-aci" boyut={14} />
+        {urun.aci === 1 ? 'Hafif acı' : 'Acı'}
+      </span>
+    )}
+  </div>
+  <div class="urun-govde">
+    <div class="urun-ust">
+      <h3>{urun.ad}</h3>
+      {urun.porsiyon && <span class="gramaj">{urun.porsiyon}</span>}
+    </div>
+
+    {urun.aciklama && <p>{urun.aciklama}</p>}
+
+    <div class="alerjenler">
+      {alerjenBilinmiyor ? (
+        <span class="alerjen-bekliyor">
+          <Ikon id="u-uyari" boyut={14} /> Alerjen bilgisi hazırlanıyor
+        </span>
+      ) : alerjenler.length === 0 ? (
+        <span class="alerjen-link" style="text-decoration:none">Alerjen içermez</span>
+      ) : (
+        alerjenler.map((kod) => (
+          <span class={`alerjen a-${kod}`} title={`${ALERJENLER[kod].ad} içerir`}>
+            <Ikon id={ALERJENLER[kod].ikon} boyut={17} />
+            <span class="gizli-metin">{ALERJENLER[kod].ad} içerir</span>
+          </span>
+        ))
+      )}
+      {tumLink && !alerjenBilinmiyor && <a class="alerjen-link" href="/alerjenler/">tümü</a>}
+    </div>
+
+    {urun.eser?.length > 0 && (
+      <p class="eser-not">
+        Eser miktarda içerebilir: {urun.eser.map((k) => ALERJENLER[k].ad).join(', ')}
+      </p>
+    )}
+
+    <div class="urun-alt">
+      {typeof urun.fiyat === 'number' && urun.fiyat > 0 ? (
+        <span class="fiyat">{fiyatYaz(urun.fiyat)} <small>KDV DAHİL</small></span>
+      ) : (
+        <span class="fiyat fiyat--bekliyor">Fiyat güncellenecek</span>
+      )}
+    </div>
+  </div>
+</article>

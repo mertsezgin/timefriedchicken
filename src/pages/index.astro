@@ -1,0 +1,173 @@
+---
+import { Image } from 'astro:assets';
+import Temel from '../layouts/Temel.astro';
+import Ikon from '../components/Ikon.astro';
+import UrunKart from '../components/UrunKart.astro';
+import heroFoto from '../assets/hero-burger.webp';
+import { isletme } from '../data/isletme.js';
+import { kategoriler, urunler, TASLAK } from '../data/menu.js';
+import { menuyuDogrula } from '../lib/dogrula.js';
+
+menuyuDogrula(urunler, kategoriler, TASLAK);
+
+const aktif = urunler.filter((u) => u.aktif !== false);
+const oneCikanlar = aktif.filter((u) => u.oneCikan);
+const sayim = (kod) => aktif.filter((u) => u.kategori === kod).length;
+
+const bant = `Her gün <strong>${isletme.kisaSaat}</strong> · Paket servis: <strong>${isletme.telefon}</strong>`;
+---
+<Temel
+  sayfa="ana"
+  aciklama="Taze tavuk, günlük ekmek, elde hazırlanan soslar. Menü, alerjen bilgisi ve paket servis."
+  bant={bant}
+>
+
+<main id="ana-icerik">
+
+  <section class="hero">
+    <div class="kapsayici hero-ic">
+      <div>
+        <span class="ust-etiket">Çıtır tavuk burger</span>
+        <h1>Tavuğun <span>en çıtırı.</span></h1>
+        <p class="hero-slogan">
+          Her gün taze marine edilen göğüs eti, sabah pişen ekmek ve kendi mutfağımızda
+          hazırlanan soslar. Karmaşık değil, sadece iyi yapılmış.
+        </p>
+        <div class="hero-dugmeler">
+          <a class="dugme dugme--birincil" href="/menu/">Menüyü Gör <Ikon id="u-ok" boyut={18} /></a>
+          <a class="dugme dugme--marka" href="/siparis/">Sipariş Ver</a>
+        </div>
+        <p class="hero-notlar">
+          <span><Ikon id="u-saat" boyut={16} /> {isletme.kisaSaat}</span>
+          <span><Ikon id="u-konum" boyut={16} /> {isletme.ilce}</span>
+          <span><Ikon id="u-uyari" boyut={16} /> <a href="/alerjenler/" style="color:inherit">Alerjen bilgisi</a></span>
+        </p>
+      </div>
+      <div class="hero-foto">
+        <Image
+          src={heroFoto}
+          alt="Çıtır tavuk burger, siyah tabakta servis edilmiş"
+          widths={[480, 760, 1180]}
+          sizes="(min-width: 900px) 46vw, 100vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="bolum bolum--krem">
+    <div class="kapsayici">
+      <div class="bolum-baslik">
+        <span class="ust-etiket">Menü</span>
+        <h2>Ne canınız çekti?</h2>
+        <p>Kategoriye dokunun, menüde doğrudan o bölüme gidin.</p>
+      </div>
+
+      <div class="kategori-izgara">
+        {kategoriler.map((k) => (
+          <a class="kategori-kart" href={`/menu/#${k.kod}`}>
+            <span class="ikon-cerceve"><Ikon id={k.ikon} boyut={32} /></span>
+            <b>{k.ad}</b>
+            <small>{sayim(k.kod)} çeşit</small>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bolum">
+    <div class="kapsayici">
+      <div class="bolum-baslik">
+        <span class="ust-etiket">Favoriler</span>
+        <h2>En çok tercih edilenler</h2>
+      </div>
+
+      <div class="urun-izgara">
+        {oneCikanlar.map((u) => <UrunKart urun={u} />)}
+      </div>
+
+      <p style="text-align:center;margin:32px 0 0">
+        <a class="dugme dugme--ikincil" href="/menu/">Tüm menüyü gör</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="bolum bolum--krem" style="padding-block:clamp(28px,4vw,44px)">
+    <div class="kapsayici">
+      <div class="uyari-kutu">
+        <Ikon id="u-uyari" boyut={22} />
+        <div>
+          <p><strong>Alerjen bilgisi</strong> her ürünün kartında ikonlarla gösterilir, ayrıntılı tablo
+            <a href="/alerjenler/">alerjenler sayfasındadır</a>. Ürünlerimiz ortak mutfakta hazırlanır.</p>
+          <p style="margin:0">Alerjiniz varsa lütfen sipariş öncesi personelimize bildirin.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bolum">
+    <div class="kapsayici ikili">
+      <div>
+        <span class="ust-etiket">Hakkımızda</span>
+        <h2>Tek işimiz tavuk</h2>
+        <p>Menümüz kısa çünkü her ürünü iyi yapmaya çalışıyoruz. Tavuğumuz dondurulmuş değil,
+          günlük geliyor. Kaplamayı ve sosları kendimiz hazırlıyoruz.</p>
+        <p>İlk şubemiz {isletme.ilce}'de. Paket servis için anlaşmalı platformlardan sipariş verebilirsiniz.</p>
+        <a class="dugme dugme--ikincil" href="/siparis/">Sipariş seçenekleri</a>
+      </div>
+      <div class="hero-gorsel" style="background:#eef0f3;color:#5b6470;border-color:#d9dde2">
+        Mekân / ekip fotoğrafı
+      </div>
+    </div>
+  </section>
+
+  <section class="bolum bolum--koyu" id="iletisim">
+    <div class="kapsayici ikili">
+      <div>
+        <span class="ust-etiket">İletişim</span>
+        <h2>Bizi bulun</h2>
+        <ul class="bilgi-liste">
+          <li>
+            <Ikon id="u-konum" boyut={22} />
+            <span>{isletme.adres}<br />{isletme.ilce}</span>
+          </li>
+          <li>
+            <Ikon id="u-telefon" boyut={22} />
+            <a href={`tel:${isletme.telefonHam}`}>{isletme.telefon}</a>
+          </li>
+          <li>
+            <Ikon id="u-saat" boyut={22} />
+            <div style="flex:1">
+              <table class="saatler">
+                <caption class="gizli-metin">Çalışma saatleri</caption>
+                <tbody>
+                  {isletme.saatler.map((s) => (
+                    <tr><th scope="row">{s.gun}</th><td>{s.saat}</td></tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <div class="harita-yer">Statik harita görseli<br />(tıklayınca Google Haritalar'da açılır)</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<aside class="cerez" aria-label="Çerez tercihi" slot="banner">
+  <div class="kapsayici cerez-ic">
+    <p>Ziyaret istatistikleri için Google Analytics kullanmak istiyoruz. Onay vermezseniz hiçbir
+      analitik çerez çalışmaz. <a href="/cerez-politikasi/">Çerez politikası</a></p>
+    <form class="cerez-dugmeler" method="post" action="/api/cerez">
+      <button class="dugme dugme--ikincil" name="karar" value="ret">Reddet</button>
+      <button class="dugme dugme--birincil" name="karar" value="kabul">Kabul et</button>
+    </form>
+  </div>
+</aside>
+
+</Temel>

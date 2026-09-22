@@ -1,0 +1,152 @@
+---
+import { Image } from 'astro:assets';
+import Ikon from '../components/Ikon.astro';
+import logoSiyah from '../assets/logo-siyah.webp';
+import logoIsaret from '../assets/logo-isaret.png';
+import { isletme } from '../data/isletme.js';
+import '../styles/main.css';
+
+const { baslik, aciklama, sayfa = '', bant } = Astro.props;
+const tamBaslik = sayfa === 'ana'
+  ? `${isletme.marka} · Çıtır Tavuk Burger`
+  : `${baslik} · ${isletme.marka} ${isletme.markaAlt}`;
+
+const menuOgeleri = [
+  { ad: 'Ana Sayfa', url: '/', kod: 'ana' },
+  { ad: 'Menü', url: '/menu/', kod: 'menu' },
+  { ad: 'Alerjenler', url: '/alerjenler/', kod: 'alerjenler' },
+  { ad: 'İletişim', url: '/#iletisim', kod: 'iletisim' },
+];
+---
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{tamBaslik}</title>
+  <meta name="description" content={aciklama} />
+  <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+  <link rel="preload" href="/fonts/rubik-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta property="og:image" content={new URL('/paylasim.jpg', Astro.site)} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="og:title" content={tamBaslik} />
+  <meta property="og:description" content={aciklama} />
+  <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="tr_TR" />
+  <meta property="og:site_name" content={`${isletme.marka} ${isletme.markaAlt}`} />
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Restaurant',
+    name: `${isletme.marka} ${isletme.markaAlt}`,
+    description: isletme.ozet,
+    servesCuisine: ['Tavuk burger', 'Fast food'],
+    priceRange: '₺₺',
+    telephone: isletme.telefon,
+    hasMenu: new URL('/menu/', Astro.site).href,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: isletme.adres,
+      addressLocality: isletme.ilce,
+      addressCountry: 'TR',
+    },
+  })} />
+</head>
+<body>
+
+<a class="atla" href="#ana-icerik">İçeriğe atla</a>
+
+{bant && (
+  <div class="ust-bant">
+    <div class="kapsayici" set:html={bant} />
+  </div>
+)}
+
+<header class="baslik-alani">
+  <div class="kapsayici baslik-ic">
+    <a class="marka" href="/">
+      <Image
+        class="marka-logo-gorsel"
+        src={logoSiyah}
+        alt={`${isletme.marka} ${isletme.markaAlt}`}
+        height={52}
+        densities={[1, 2]}
+        loading="eager"
+      />
+    </a>
+
+    <nav class="ana-menu" aria-label="Ana menü">
+      <ul>
+        {menuOgeleri.map((o) => (
+          <li><a href={o.url} aria-current={sayfa === o.kod ? 'page' : undefined}>{o.ad}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <a class="dugme dugme--marka baslik-cta" href="/siparis/" aria-current={sayfa === 'siparis' ? 'page' : undefined}>
+      <Ikon id="u-paket" boyut={18} />
+      Sipariş Ver
+    </a>
+
+    <details class="mobil-menu">
+      <summary aria-label="Menüyü aç"><Ikon id="u-menu" /></summary>
+      <div class="mobil-menu-panel">
+        <ul>
+          {menuOgeleri.map((o) => <li><a href={o.url}>{o.ad}</a></li>)}
+        </ul>
+        <a class="dugme dugme--marka dugme--blok" href="/siparis/">Sipariş Ver</a>
+      </div>
+    </details>
+  </div>
+</header>
+
+<slot />
+
+<footer class="alt-bilgi">
+  <div class="kapsayici">
+    <div class="alt-izgara">
+      <div>
+        <Image class="alt-logo" src={logoIsaret} alt={`${isletme.marka} ${isletme.markaAlt}`} height={58} densities={[1, 2]} loading="lazy" />
+        <p>{isletme.ozet}</p>
+      </div>
+      <div>
+        <h3>Menü</h3>
+        <ul>
+          <li><a href="/menu/">Tüm menü</a></li>
+          <li><a href="/alerjenler/">Alerjen tablosu</a></li>
+          <li><a href="/siparis/">Sipariş ver</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Kurumsal</h3>
+        <ul>
+          <li><a href="/franchise/">Franchise başvurusu</a></li>
+          <li><a href="/#iletisim">İletişim</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Yasal</h3>
+        <ul>
+          <li><a href="/kvkk/">KVKK Aydınlatma Metni</a></li>
+          <li><a href="/cerez-politikasi/">Çerez Politikası</a></li>
+          <li><a href="/cerez-tercihi/">Çerez Tercihi</a></li>
+          <li><a href="/yasal-bilgiler/">Yasal Bilgiler / Künye</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="kunye">
+      <p>Ticari unvan: {isletme.unvan} · Adres: {isletme.adres}, {isletme.ilce} · Vergi dairesi: {isletme.vergiDairesi} · Sicil no: {isletme.sicil}</p>
+      <p>Fiyatlara KDV dahildir. Görseller temsilidir. © {new Date().getFullYear()} {isletme.marka}</p>
+    </div>
+  </div>
+</footer>
+
+<slot name="banner" />
+
+</body>
+</html>

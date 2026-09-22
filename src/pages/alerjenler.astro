@@ -1,0 +1,145 @@
+---
+import Temel from '../layouts/Temel.astro';
+import Ikon from '../components/Ikon.astro';
+import { kategoriler, urunler, guncelleme, TASLAK } from '../data/menu.js';
+import { ALERJENLER } from '../data/alerjenler.js';
+import { menuyuDogrula, tarihYaz } from '../lib/dogrula.js';
+
+menuyuDogrula(urunler, kategoriler, TASLAK);
+
+const aktif = urunler.filter((u) => u.aktif !== false);
+const kodlar = Object.keys(ALERJENLER);
+
+// Alerjen listesi null ise o ürünün etiket kontrolü henüz yapılmamıştır.
+// Bu durumda "içermez" yazmak yanlış beyan olur, "?" gösterilir.
+const durum = (u, kod) =>
+  !Array.isArray(u.alerjenler) ? 'bilinmiyor'
+  : u.alerjenler.includes(kod) ? 'var'
+  : (u.eser ?? []).includes(kod) ? 'eser'
+  : 'yok';
+
+const isaret = { var: '●', eser: '○', yok: '–', bilinmiyor: '?' };
+const yazi = {
+  var: 'İçerir',
+  eser: 'Eser miktarda içerebilir',
+  yok: 'İçermez',
+  bilinmiyor: 'Bilgi hazırlanıyor',
+};
+
+const bilinmeyenSayisi = aktif.filter((u) => !Array.isArray(u.alerjenler)).length;
+
+const bant = `Son güncelleme: <strong>${tarihYaz(guncelleme)}</strong>`;
+---
+<Temel
+  sayfa="alerjenler"
+  baslik="Alerjen Tablosu"
+  aciklama="TFC menüsündeki tüm ürünlerin 14 alerjene göre tablosu. İçerir ve eser miktarda içerebilir bilgisi ayrı gösterilir."
+  bant={bant}
+>
+
+<main id="ana-icerik">
+  <section class="bolum">
+    <div class="kapsayici">
+
+      <div class="bolum-baslik" style="max-width:760px">
+        <span class="ust-etiket">Alerjenler</span>
+        <h2>Alerjen tablosu</h2>
+        <p>Türk Gıda Kodeksi Gıda Etiketleme ve Tüketicileri Bilgilendirme Yönetmeliği'nde
+          (RG 26.01.2017/29960, Ek-1) sayılan 14 alerjen için hazırlanmıştır.</p>
+      </div>
+
+      <div class="uyari-kutu" style="margin-bottom:24px">
+        <Ikon id="u-uyari" boyut={22} />
+        <div>
+          <p><strong>Alerjiniz varsa sipariş öncesi personelimize bildirin.</strong> Tavuk ürünleri ile
+            patates <strong>ayrı fritözlerde</strong> kızartılır. Buna rağmen ürünlerimiz ortak mutfakta,
+            ortak tezgah ve ekipmanla hazırlandığı için tabloda "içermez" görünen bir üründe de eser
+            miktarda bulaşma ihtimali tamamen ortadan kalkmaz.</p>
+          <p style="margin:0">Tedarikçi veya tarif değişikliklerinde tablo güncellenir.
+            Bu tablo {tarihYaz(guncelleme)} tarihinde geçerlidir.</p>
+        </div>
+      </div>
+
+      {TASLAK && bilinmeyenSayisi > 0 && (
+        <div class="veri-uyari">
+          <Ikon id="u-uyari" boyut={18} />
+          <p style="margin:0">
+            <strong>Bu tablo henüz tamamlanmadı.</strong> {bilinmeyenSayisi} ürünün malzeme etiketleri
+            kontrol ediliyor. Tamamlanana kadar alerjen bilgisi için lütfen personelimize danışın.
+          </p>
+        </div>
+      )}
+
+      <div class="tablo-aciklama">
+        <span><b>●</b> İçerir</span>
+        <span><b>○</b> Eser miktarda içerebilir (çapraz bulaşma)</span>
+        <span><b>–</b> İçermez</span>
+        {bilinmeyenSayisi > 0 && <span><b>?</b> Bilgi hazırlanıyor</span>}
+      </div>
+
+      <div class="tablo-kaydir" tabindex="0" role="region" aria-label="Alerjen tablosu, yatay kaydırılabilir">
+        <table class="alerjen-tablo">
+          <caption class="gizli-metin">Ürünlere göre 14 alerjen listesi</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="urun-sutun">Ürün</th>
+              {kodlar.map((kod) => (
+                <th scope="col">
+                  <span class="dik" title={ALERJENLER[kod].ad}>{ALERJENLER[kod].kisa ?? ALERJENLER[kod].ad}</span>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          {kategoriler.map((k) => (
+            <tbody>
+              <tr class="kategori-satir">
+                <th scope="rowgroup" colspan={kodlar.length + 1}>{k.ad}</th>
+              </tr>
+              {aktif.filter((u) => u.kategori === k.kod).map((u) => (
+                <tr>
+                  <th scope="row" class="urun-sutun">
+                    {u.ad}
+                    <small>{u.porsiyon}</small>
+                  </th>
+                  {kodlar.map((kod) => {
+                    const d = durum(u, kod);
+                    return (
+                      <td class={`h-${d}`}>
+                        <span aria-hidden="true">{isaret[d]}</span>
+                        <span class="gizli-metin">{yazi[d]}</span>
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          ))}
+        </table>
+      </div>
+
+      <div class="ikili" style="margin-top:44px">
+        <div>
+          <h3>Bilgi nereden geliyor?</h3>
+          <p>Tablodaki bilgiler, kullandığımız her malzemenin ambalaj etiketindeki içindekiler listesi
+            ve tedarikçi teknik şartnameleri kontrol edilerek hazırlanır. Bir malzemenin markası
+            değiştiğinde kayıt yeniden kontrol edilir.</p>
+        </div>
+        <div>
+          <h3>Çapraz bulaşma</h3>
+          <p><strong>Tavuk ürünleri ve patates ayrı fritözlerde kızartılır,</strong> yağlar birbirine
+            karışmaz. Ancak soslar ortak alanda hazırlanır, tezgah ve ekipman ürünler arasında
+            paylaşılır. Bu nedenle gluten, süt, yumurta, susam ve hardal için eser miktarda bulaşma
+            ihtimali tamamen ortadan kaldırılamaz.</p>
+        </div>
+      </div>
+
+      <p class="tablo-not">
+        Tabloyu yazdırabilirsiniz. Güncel sürüm her zaman bu sayfadadır:
+        <a href="/alerjenler/">/alerjenler/</a>
+      </p>
+
+    </div>
+  </section>
+</main>
+
+</Temel>

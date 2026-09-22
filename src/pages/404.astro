@@ -1,0 +1,22 @@
+---
+import Temel from '../layouts/Temel.astro';
+import Ikon from '../components/Ikon.astro';
+---
+<Temel baslik="Sayfa bulunamadı" aciklama="Aradığınız sayfa bulunamadı.">
+  <main id="ana-icerik">
+    <section class="bolum" style="text-align:center">
+      <div class="kapsayici" style="max-width:560px">
+        <span class="ust-etiket">404</span>
+        <h1 style="font-size:clamp(1.8rem,4vw,2.6rem)">Bu sayfayı bulamadık</h1>
+        <p style="color:var(--metin-soluk)">
+          Aradığınız sayfa taşınmış ya da hiç var olmamış olabilir.
+          Menüye göz atabilir veya doğrudan sipariş verebilirsiniz.
+        </p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px">
+          <a class="dugme dugme--birincil" href="/menu/">Menüyü Gör <Ikon id="u-ok" boyut={18} /></a>
+          <a class="dugme dugme--marka" href="/siparis/">Sipariş Ver</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Temel>
