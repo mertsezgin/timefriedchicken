@@ -37,16 +37,16 @@ npx astro dev --host
 
 ```bash
 npm run build
-npx wrangler pages deploy dist --project-name=time-fried-chicken
+npx wrangler pages deploy dist --project-name=timefriedchicken
 ```
 
 İlk komutta tarayıcı açılıp Cloudflare hesabınızla giriş yapmanızı ister.
-Sonuç: `https://time-fried-chicken.pages.dev` gibi bir adres.
+Sonuç: `https://timefriedchicken.pages.dev` gibi geçici bir adres. Alan adı bağlanınca timefriedchicken.com üzerinden yayına girer.
 
 ### Yayın sonrası
 
-- **Alan adı:** Cloudflare Pages → Custom domains. Alan adı alınınca `astro.config.mjs`
-  içindeki `site` değerini ve `public/robots.txt` içindeki sitemap adresini güncelleyin.
+- **Alan adı:** timefriedchicken.com. Cloudflare Pages → Custom domains üzerinden bağlanır.
+  `www` sürümü apex adrese yönlendirilir (Cloudflare → Redirect Rules).
 - `public/_headers` güvenlik başlıklarını ve önbellek sürelerini taşır.
 - `public/_redirects` içinde `/qr → /menu/` yönlendirmesi var. **Masadaki karekod `/qr`
   adresine basılmalı,** böylece menü düzeni değişse bile karekod geçerli kalır.
