@@ -1,0 +1,61 @@
+---
+import Temel from '../layouts/Temel.astro';
+import Ikon from '../components/Ikon.astro';
+
+// Henüz içeriği hazırlanmamış sayfalar. Her biri gerçek sayfayla değiştirilecek,
+// o zaman bu listeden çıkarılacak. Amaç demoda kırık link kalmaması.
+// Not: getStaticPaths ayrı bir kapsamda çalıştığı için liste onun içinde tanımlı.
+export function getStaticPaths() {
+  const HAZIRLANAN = [
+    {
+      sayfa: 'franchise',
+      baslik: 'Franchise Başvurusu',
+      aciklama: 'Time Fried Chicken franchise başvurusu.',
+      metin: 'Franchise modeli, koşullar ve başvuru formu bu sayfada yer alacak.',
+    },
+    {
+      sayfa: 'kvkk',
+      baslik: 'KVKK Aydınlatma Metni',
+      aciklama: 'Kişisel verilerin korunması hakkında aydınlatma metni.',
+      metin: '6698 sayılı Kanun kapsamındaki aydınlatma metni hukuki gözden geçirmeden sonra yayımlanacak.',
+    },
+    {
+      sayfa: 'cerez-politikasi',
+      baslik: 'Çerez Politikası',
+      aciklama: 'Sitede kullanılan çerezler hakkında bilgi.',
+      metin: 'Kullanılan çerezler, süreleri ve amaçları bu sayfada tek tek listelenecek.',
+    },
+    {
+      sayfa: 'cerez-tercihi',
+      baslik: 'Çerez Tercihi',
+      aciklama: 'Çerez tercihinizi değiştirin.',
+      metin: 'Çerez onayınızı buradan değiştirebileceksiniz. Analitik kurulumuyla birlikte açılacak.',
+    },
+    {
+      sayfa: 'yasal-bilgiler',
+      baslik: 'Yasal Bilgiler',
+      aciklama: 'İşletme künyesi ve yasal bilgiler.',
+      metin: 'Ticari unvan, adres, vergi dairesi ve sicil bilgileri işletmeden alındığında yayımlanacak.',
+    },
+  ];
+
+  return HAZIRLANAN.map((s) => ({ params: { sayfa: s.sayfa }, props: s }));
+}
+
+const { baslik, aciklama, metin } = Astro.props;
+---
+<Temel baslik={baslik} aciklama={aciklama}>
+  <main id="ana-icerik">
+    <section class="bolum">
+      <div class="kapsayici" style="max-width:620px;text-align:center">
+        <span class="ust-etiket">Hazırlanıyor</span>
+        <h1 style="font-size:clamp(1.7rem,4vw,2.4rem)">{baslik}</h1>
+        <p style="color:var(--metin-soluk)">{metin}</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px">
+          <a class="dugme dugme--birincil" href="/menu/">Menüyü Gör <Ikon id="u-ok" boyut={18} /></a>
+          <a class="dugme dugme--ikincil" href="/">Ana sayfa</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Temel>

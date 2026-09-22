@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/js-kontrol.mjs",
+    "build": "astro build && node scripts/js-kontrol.mjs && node scripts/link-kontrol.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },

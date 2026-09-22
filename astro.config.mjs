@@ -3,7 +3,8 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://ornek.com.tr',   // alan adı alınınca burası güncellenecek
+  // Alan adı alınınca SITE_URL ortam değişkenini ya da buradaki varsayılanı güncelleyin.
+  site: process.env.SITE_URL ?? 'https://time-fried-chicken.pages.dev',
   output: 'static',
   trailingSlash: 'always',
   integrations: [sitemap()],
