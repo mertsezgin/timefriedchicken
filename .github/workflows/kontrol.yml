@@ -1,0 +1,19 @@
+name: Kontrol
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  derle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # build; içinde veri doğrulama, sıfır JS denetimi ve link kontrolü çalışır
+      - run: npm run build

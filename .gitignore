@@ -7,6 +7,11 @@ dist/
 .env
 .env.*
 
-# referans malzeme (depoya girmiyor, diskte kalıyor)
+# yerel araç ayarları
+.claude/
+
+# referans ve ham malzeme: diskte kalır, depoya girmez
+# (sitenin kullandığı görseller src/assets altında optimize edilmiş hâlde duruyor)
 feane/
 prototip/
+görsel-raw/
