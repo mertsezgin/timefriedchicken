@@ -18,38 +18,46 @@ Telefondan denemek için (aynı wifi ağında):
 npx astro dev --host
 ```
 
-## Yayınlama (Cloudflare Pages)
+## Yayınlama
 
-İki yol var. **İlk yayın için B daha hızlı, kalıcı düzen için A önerilir.**
+- Depo: github.com/mertsezgin/timefriedchicken
+- Alan adı: timefriedchicken.com (Cloudflare)
 
-### A. GitHub deposuna bağlayarak (önerilen)
+Dallar:
 
-1. Bu klasörü bir GitHub deposuna gönderin.
-2. Cloudflare panelinde **Workers & Pages → Create → Pages → Connect to Git**.
-3. Ayarlar:
-   - Framework preset: **Astro**
-   - Build command: `npm run build`
-   - Build output directory: `dist`
-   - Node sürümü: 20 veya üzeri
-4. Her `git push` sonrası site otomatik güncellenir. Pull request'ler için ayrı önizleme adresi çıkar.
+| Dal | Ne besliyor |
+|---|---|
+| `main` | Canlıdaki "Yapım Aşamasındayız" sayfası (tek HTML dosyası) |
+| `yeni-site` | Bu Astro projesi. Veriler tamamlanınca `main` ile birleştirilecek. |
 
-### B. Doğrudan yükleyerek (hızlı demo)
+### Demo / önizleme adresi (canlı siteye dokunmaz)
 
 ```bash
+npx wrangler login
 npm run build
-npx wrangler pages deploy dist --project-name=timefriedchicken
+npx wrangler pages deploy dist --project-name=tfc-onizleme
 ```
 
-İlk komutta tarayıcı açılıp Cloudflare hesabınızla giriş yapmanızı ister.
-Sonuç: `https://timefriedchicken.pages.dev` gibi geçici bir adres. Alan adı bağlanınca timefriedchicken.com üzerinden yayına girer.
+Sonuç `https://tfc-onizleme.pages.dev` olur. Ayrı bir Cloudflare projesi olduğu için
+timefriedchicken.com etkilenmez.
+
+### Canlıya alma (veriler hazır olunca)
+
+1. `src/data/menu.js` içinde **`TASLAK = false`** yapın. Eksik fiyat, gramaj veya alerjen
+   bilgisi varsa derleme durur, yani eksik veri yayına çıkamaz.
+2. `yeni-site` dalını `main` ile birleştirin.
+3. Cloudflare → Workers & Pages → **timefriedchicken** → Settings → Build:
+   - Build command: `npm run build`
+   - Deploy command: `npx wrangler deploy` (yapılandırma `wrangler.jsonc` dosyasında)
+4. Custom domains bölümünde timefriedchicken.com ve www bağlı olmalı.
+   www → apex yönlendirmesi Cloudflare → Rules → Redirect Rules ile yapılır.
 
 ### Yayın sonrası
 
-- **Alan adı:** timefriedchicken.com. Cloudflare Pages → Custom domains üzerinden bağlanır.
-  `www` sürümü apex adrese yönlendirilir (Cloudflare → Redirect Rules).
 - `public/_headers` güvenlik başlıklarını ve önbellek sürelerini taşır.
-- `public/_redirects` içinde `/qr → /menu/` yönlendirmesi var. **Masadaki karekod `/qr`
-  adresine basılmalı,** böylece menü düzeni değişse bile karekod geçerli kalır.
+- `public/_redirects` içinde `/qr → /menu/` yönlendirmesi var. **Masadaki karekod
+  `timefriedchicken.com/qr` adresine basılmalı,** böylece menü düzeni değişse bile
+  karekod geçerli kalır.
 
 ## Yayın öncesi kontrol listesi
 

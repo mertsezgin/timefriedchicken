@@ -1,0 +1,14 @@
+// Cloudflare Workers (static assets) yapılandırması.
+// Yayına alma sırası: önce `npm run build` çalışır, sonra buradaki dist klasörü sunulur.
+// Cloudflare panelinde Build command: npm run build · Deploy command: npx wrangler deploy
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "timefriedchicken",
+  "compatibility_date": "2026-04-26",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}
