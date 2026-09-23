@@ -32,14 +32,18 @@ Dallar:
 
 ### Demo / önizleme adresi (canlı siteye dokunmaz)
 
+Adres: **https://tfc-onizleme.merttsezgin.workers.dev**
+
+Güncellemek için:
+
 ```bash
-npx wrangler login
 npm run build
-npx wrangler pages deploy dist --project-name=tfc-onizleme
+npx wrangler deploy -c wrangler.onizleme.jsonc
 ```
 
-Sonuç `https://tfc-onizleme.pages.dev` olur. Ayrı bir Cloudflare projesi olduğu için
-timefriedchicken.com etkilenmez.
+Ayrı bir Cloudflare projesi (`tfc-onizleme`) olduğu için timefriedchicken.com etkilenmez.
+Canonical adresler timefriedchicken.com'u gösterdiğinden önizlemenin arama sonuçlarında
+gerçek sitenin yerini alma riski yok.
 
 ### Canlıya alma (veriler hazır olunca)
 

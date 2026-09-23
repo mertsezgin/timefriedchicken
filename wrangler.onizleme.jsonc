@@ -1,0 +1,6 @@
+{
+  "name": "tfc-onizleme",
+  "compatibility_date": "2026-04-26",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": { "directory": "./dist", "not_found_handling": "404-page" }
+}
