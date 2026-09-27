@@ -364,10 +364,15 @@ img, svg { max-width: 100%; height: auto; display: block; }
 .bilgi-liste a:hover { text-decoration: underline; }
 
 .harita-yer {
-  aspect-ratio: 16 / 10; border-radius: var(--r-kart); border: 2px dashed var(--cizgi);
-  background: #eef0f3; display: grid; place-items: center; text-align: center;
-  color: var(--metin-soluk); font-size: .88rem; padding: 16px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  aspect-ratio: 16 / 10; border-radius: var(--r-kart); border: 2px dashed rgba(255, 255, 255, .22);
+  background: rgba(255, 255, 255, .05); text-align: center; padding: 18px;
+  text-decoration: none; color: inherit; transition: background-color .15s, border-color .15s;
 }
+.harita-yer:hover { background: rgba(255, 255, 255, .1); border-color: var(--sari); }
+.harita-yer span { font-weight: 700; }
+.harita-yer small { font-size: .82rem; color: #aeb6c1; max-width: 32ch; }
+.harita-yer svg { color: var(--sari); }
 
 table.saatler { width: 100%; border-collapse: collapse; font-size: .95rem; }
 table.saatler th, table.saatler td { text-align: left; padding: 9px 0; border-bottom: 1px solid var(--cizgi); }

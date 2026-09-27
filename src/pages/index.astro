@@ -39,7 +39,7 @@ const bant = `Her gün <strong>${isletme.kisaSaat}</strong> · Paket servis: <st
         </div>
         <p class="hero-notlar">
           <span><Ikon id="u-saat" boyut={16} /> {isletme.kisaSaat}</span>
-          <span><Ikon id="u-konum" boyut={16} /> {isletme.ilce}</span>
+          <span><Ikon id="u-konum" boyut={16} /> {isletme.semt}, İstanbul</span>
           <span><Ikon id="u-uyari" boyut={16} /> <a href="/alerjenler/" style="color:inherit">Alerjen bilgisi</a></span>
         </p>
       </div>
@@ -113,7 +113,7 @@ const bant = `Her gün <strong>${isletme.kisaSaat}</strong> · Paket servis: <st
         <h2>Tek işimiz tavuk</h2>
         <p>Menümüz kısa çünkü her ürünü iyi yapmaya çalışıyoruz. Tavuğumuz dondurulmuş değil,
           günlük geliyor. Kaplamayı ve sosları kendimiz hazırlıyoruz.</p>
-        <p>İlk şubemiz {isletme.ilce}'de. Paket servis için anlaşmalı platformlardan sipariş verebilirsiniz.</p>
+        <p>İlk şubemiz {isletme.semt}'da. Paket servis için anlaşmalı platformlardan sipariş verebilirsiniz.</p>
         <a class="dugme dugme--ikincil" href="/siparis/">Sipariş seçenekleri</a>
       </div>
       <div class="hero-gorsel" style="background:#eef0f3;color:#5b6470;border-color:#d9dde2">
@@ -130,7 +130,7 @@ const bant = `Her gün <strong>${isletme.kisaSaat}</strong> · Paket servis: <st
         <ul class="bilgi-liste">
           <li>
             <Ikon id="u-konum" boyut={22} />
-            <span>{isletme.adres}<br />{isletme.ilce}</span>
+            <span>{isletme.adres}<br />{isletme.semt}, {isletme.postaKodu} {isletme.ilce}</span>
           </li>
           <li>
             <Ikon id="u-telefon" boyut={22} />
@@ -152,7 +152,11 @@ const bant = `Her gün <strong>${isletme.kisaSaat}</strong> · Paket servis: <st
         </ul>
       </div>
       <div>
-        <div class="harita-yer">Statik harita görseli<br />(tıklayınca Google Haritalar'da açılır)</div>
+        <a class="harita-yer" href={isletme.haritaLinki} target="_blank" rel="noopener">
+          <Ikon id="u-konum" boyut={28} />
+          <span>Google Haritalar'da aç</span>
+          <small>{isletme.adres}, {isletme.semt}</small>
+        </a>
       </div>
     </div>
   </section>

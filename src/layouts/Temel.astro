@@ -50,10 +50,18 @@ const menuOgeleri = [
     hasMenu: new URL('/menu/', Astro.site).href,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: isletme.adres,
-      addressLocality: isletme.ilce,
+      streetAddress: `${isletme.adres}, ${isletme.semt}`,
+      addressLocality: 'Küçükçekmece',
+      addressRegion: 'İstanbul',
+      postalCode: isletme.postaKodu,
       addressCountry: 'TR',
     },
+    openingHoursSpecification: isletme.saatlerYapisal.map((s) => ({
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: s.gunler,
+      opens: s.acilis,
+      closes: s.kapanis,
+    })),
   })} />
 </head>
 <body>
@@ -140,7 +148,7 @@ const menuOgeleri = [
     </div>
 
     <div class="kunye">
-      <p>Ticari unvan: {isletme.unvan} · Adres: {isletme.adres}, {isletme.ilce} · Vergi dairesi: {isletme.vergiDairesi} · Sicil no: {isletme.sicil}</p>
+      <p>Ticari unvan: {isletme.unvan} · Adres: {isletme.adres}, {isletme.semt}, {isletme.postaKodu} {isletme.ilce} · Vergi dairesi: {isletme.vergiDairesi} · Sicil no: {isletme.sicil}</p>
       <p>Fiyatlara KDV dahildir. Görseller temsilidir. © {new Date().getFullYear()} {isletme.marka}</p>
     </div>
   </div>
