@@ -1,0 +1,33 @@
+---
+import Temel from './Temel.astro';
+import Ikon from '../components/Ikon.astro';
+import { YASAL } from '../data/yasal.js';
+import { tarihYaz } from '../lib/dogrula.js';
+
+const { baslik, aciklama, ustEtiket = 'Yasal', guncelleme } = Astro.props;
+---
+<Temel baslik={baslik} aciklama={aciklama}>
+  <main id="ana-icerik">
+    <section class="bolum">
+      <div class="kapsayici">
+        <div class="metin">
+          <span class="ust-etiket">{ustEtiket}</span>
+          <h1 style="font-size:clamp(1.8rem,4vw,2.4rem)">{baslik}</h1>
+          {guncelleme && <p class="tarih">Son güncelleme: {tarihYaz(guncelleme)}</p>}
+
+          {YASAL.taslak && (
+            <div class="veri-uyari" style="margin:22px 0">
+              <Ikon id="u-uyari" boyut={18} />
+              <p style="margin:0">
+                <strong>Bu metin taslaktır.</strong> Köşeli parantezli alanlar işletmeden,
+                metnin son hâli hukuki gözden geçirmeden sonra netleşecek.
+              </p>
+            </div>
+          )}
+
+          <slot />
+        </div>
+      </div>
+    </section>
+  </main>
+</Temel>

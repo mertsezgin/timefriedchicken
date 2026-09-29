@@ -1,0 +1,27 @@
+---
+import Temel from '../layouts/Temel.astro';
+import Ikon from '../components/Ikon.astro';
+import { isletme } from '../data/isletme.js';
+---
+<Temel
+  baslik="Teşekkürler"
+  aciklama="Mesajınız bize ulaştı."
+>
+  <main id="ana-icerik">
+    <section class="bolum" style="text-align:center">
+      <div class="kapsayici" style="max-width:560px">
+        <div class="durum-ikon" aria-hidden="true"><Ikon id="u-ok" boyut={34} /></div>
+        <h1 style="font-size:clamp(1.7rem,4vw,2.4rem)">Mesajınız bize ulaştı</h1>
+        <p style="color:var(--metin-soluk)">
+          En kısa sürede size dönüş yapacağız. Acil bir durumsa telefonla aramanız daha hızlı olur.
+        </p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px">
+          <a class="dugme dugme--marka" href={`tel:${isletme.telefonHam}`}>
+            <Ikon id="u-telefon" boyut={18} /> {isletme.telefon}
+          </a>
+          <a class="dugme dugme--ikincil" href="/menu/">Menüye dön</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Temel>

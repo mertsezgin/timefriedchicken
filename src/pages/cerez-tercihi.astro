@@ -1,0 +1,54 @@
+---
+import Metin from '../layouts/Metin.astro';
+import { YASAL } from '../data/yasal.js';
+---
+<Metin
+  baslik="Çerez Tercihi"
+  aciklama="Ziyaret istatistikleri için verdiğiniz çerez onayını buradan değiştirebilirsiniz."
+  ustEtiket="Tercih"
+  guncelleme={YASAL.cerezSurumu}
+>
+
+<p>
+  Ziyaret istatistikleri için Google Analytics kullanmak istiyoruz. Bu tamamen size bağlı:
+  onay vermezseniz site sıfır JavaScript ile çalışmaya devam eder, hiçbir analitik çerez yazılmaz.
+</p>
+
+<form method="post" action="/api/cerez" style="margin:28px 0">
+  <input type="hidden" name="donus" value="/cerez-tercihi/" />
+  <input type="hidden" name="surum" value={YASAL.cerezSurumu} />
+  <div style="display:flex;gap:12px;flex-wrap:wrap">
+    <button class="dugme dugme--marka" name="karar" value="kabul" type="submit">
+      İstatistik çerezlerini kabul et
+    </button>
+    <button class="dugme dugme--ikincil" name="karar" value="ret" type="submit">
+      Reddet / onayı geri çek
+    </button>
+  </div>
+</form>
+
+<p class="form-not">
+  Kararınız bir yıl süreyle <code>cerez_onay</code> çerezinde saklanır. Onayı geri çekerseniz
+  Google Analytics çerezleri (<code>_ga</code>, <code>_ga_*</code>) silinir.
+</p>
+
+<h2>Onay verirseniz ne oluyor?</h2>
+<ul>
+  <li>Sayfaya Google Analytics etiketi eklenir (yaklaşık 90 KB betik).</li>
+  <li>Hangi sayfaların ziyaret edildiği, nereden gelindiği ve cihaz türü ölçülür.</li>
+  <li>Reklam kişiselleştirme ve Google Signals kapalıdır; veriler 14 ay sonra silinir.</li>
+</ul>
+
+<h2>Onay vermezseniz ne oluyor?</h2>
+<ul>
+  <li>Sayfaya hiçbir betik eklenmez, site tamamen JavaScript'siz çalışır.</li>
+  <li>Hiçbir analitik çerez yazılmaz.</li>
+  <li>Menü, alerjen tablosu ve tüm sayfalar aynı şekilde kullanılabilir.</li>
+</ul>
+
+<p style="margin-top:2em">
+  Ayrıntılar için <a href="/cerez-politikasi/">Çerez Politikası</a> ve
+  <a href="/kvkk/">KVKK Aydınlatma Metni</a>.
+</p>
+
+</Metin>

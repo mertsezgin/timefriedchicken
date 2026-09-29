@@ -1,0 +1,80 @@
+---
+import Metin from '../layouts/Metin.astro';
+import { isletme } from '../data/isletme.js';
+import { YASAL } from '../data/yasal.js';
+---
+<Metin
+  baslik="Yasal Bilgiler"
+  aciklama="Time Fried Chicken işletme künyesi, iletişim ve yasal bilgilendirmeler."
+  ustEtiket="Künye"
+  guncelleme={YASAL.aydinlatmaSurumu}
+>
+
+<h2>İşletme bilgileri</h2>
+<p>
+  5651 sayılı Kanun'un 3. maddesi ile 6563 sayılı Elektronik Ticaretin Düzenlenmesi Hakkında
+  Kanun uyarınca yayımlanmaktadır.
+</p>
+<table>
+  <tbody>
+    <tr><th>Ticari unvan</th><td><span class="yer-tutucu">{isletme.unvan}</span></td></tr>
+    <tr><th>İşletme adı</th><td>{isletme.marka} {isletme.markaAlt}</td></tr>
+    <tr><th>Adres</th><td>{isletme.adres}, {isletme.semt}, {isletme.postaKodu} {isletme.ilce}</td></tr>
+    <tr><th>Telefon</th><td><a href={`tel:${isletme.telefonHam}`}>{isletme.telefon}</a></td></tr>
+    <tr><th>Vergi dairesi</th><td><span class="yer-tutucu">{isletme.vergiDairesi}</span></td></tr>
+    <tr><th>Sicil no</th><td><span class="yer-tutucu">{isletme.sicil}</span></td></tr>
+    <tr><th>Bağlı olunan oda</th><td><span class="yer-tutucu">[esnaf / ticaret odası]</span></td></tr>
+    <tr><th>KVKK başvuru adresi</th><td><span class="yer-tutucu">{YASAL.basvuruEposta}</span></td></tr>
+  </tbody>
+</table>
+
+<h2>Site ve barındırma</h2>
+<table>
+  <tbody>
+    <tr><th>Alan adı</th><td>timefriedchicken.com</td></tr>
+    <tr><th>Barındırma (yer sağlayıcı)</th><td>Cloudflare, Inc. (ABD)</td></tr>
+  </tbody>
+</table>
+
+<h2>Fiyatlar ve menü</h2>
+<ul>
+  <li>Menüde yer alan fiyatlar <strong>tüm vergiler dahil</strong> Türk Lirası cinsindendir.</li>
+  <li>Fiyatlar restoran içi satış içindir. Paket servis platformlarındaki fiyatlar, platformların
+    hizmet bedelleri nedeniyle farklı olabilir.</li>
+  <li>Servis, kuver veya masa ücreti alınmaz.</li>
+  <li>Menüdeki bilgiler ve fiyatlar, sayfada belirtilen son güncelleme tarihinde geçerlidir.</li>
+</ul>
+
+<h2>Görseller</h2>
+<p>
+  Sitedeki ürün görselleri <strong>temsilidir.</strong> Sunum ve porsiyon görünümü farklılık
+  gösterebilir. Porsiyon ölçüleri menüde ayrıca belirtilir.
+</p>
+
+<h2>Alerjen bilgisi</h2>
+<p>
+  Alerjen bilgileri, Türk Gıda Kodeksi Gıda Etiketleme ve Tüketicileri Bilgilendirme
+  Yönetmeliği'nin (RG 26.01.2017/29960) Ek-1'inde sayılan 14 alerjen için
+  <a href="/alerjenler/">alerjen tablosu sayfasında</a> yayımlanır. Ürünlerimiz ortak mutfakta
+  hazırlandığından eser miktarda bulaşma ihtimali tamamen ortadan kaldırılamaz. Alerjiniz varsa
+  sipariş öncesi personelimize bildiriniz.
+</p>
+
+<h2>Telif ve marka</h2>
+<p>
+  Sitedeki logo, marka adı, metin ve görsellerin hakları {isletme.marka} {isletme.markaAlt}'a
+  aittir. İzinsiz kullanılamaz.
+</p>
+
+<h2>İletişim ve şikâyet</h2>
+<p>
+  Her türlü talep, öneri ve şikâyetiniz için <a href="/iletisim/">iletişim sayfamızdan</a> bize
+  ulaşabilirsiniz. Tüketici şikâyetleriniz için ayrıca Ticaret Bakanlığı Tüketici Şikâyet
+  Uygulaması'na başvurabilirsiniz.
+</p>
+
+<p style="margin-top:2em">
+  <a href="/kvkk/">KVKK Aydınlatma Metni</a> · <a href="/cerez-politikasi/">Çerez Politikası</a>
+</p>
+
+</Metin>

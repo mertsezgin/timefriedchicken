@@ -1,0 +1,223 @@
+---
+import Temel from '../layouts/Temel.astro';
+import Ikon from '../components/Ikon.astro';
+import { isletme } from '../data/isletme.js';
+import { YASAL } from '../data/yasal.js';
+
+const adimlar = [
+  { baslik: 'Başvuru', metin: 'Formu doldurun. Şehir, lokasyon fikri ve yatırım bütçenizi öğrenelim.' },
+  { baslik: 'Ön görüşme', metin: 'Telefonda tanışalım, beklentileri ve işletme modelini konuşalım.' },
+  { baslik: 'Lokasyon değerlendirmesi', metin: 'Düşündüğünüz bölgeyi birlikte inceleyelim, uygunluğuna bakalım.' },
+  { baslik: 'Sözleşme ve açılış', metin: 'Şartlarda anlaşınca kurulum, eğitim ve açılış süreci başlar.' },
+];
+
+const olcutler = [
+  'Yoğun yaya trafiği olan cadde, AVM veya site girişi konumu',
+  'Mutfak ve servis alanı için yeterli metrekare',
+  'Paket servis ve kurye çıkışına uygun düzen',
+  'İşletmenin başında bizzat duracak bir ortak',
+  'Gıda güvenliği ve hijyen standartlarımıza uyum taahhüdü',
+];
+
+const sss = [
+  {
+    s: 'Franchise bedeli ve yatırım tutarı ne kadar?',
+    c: 'Tutar lokasyonun büyüklüğüne, tadilat ihtiyacına ve ekipman durumuna göre değişir. Ön görüşmede size özel bir tablo çıkarıyoruz.',
+  },
+  {
+    s: 'Hangi şehirlerde franchise veriyorsunuz?',
+    c: 'Öncelikli olarak İstanbul ve çevresindeyiz. Diğer şehirlerden gelen başvuruları da değerlendiriyoruz.',
+  },
+  {
+    s: 'Deneyimim yok, yine de başvurabilir miyim?',
+    c: 'Evet. Gıda sektöründe deneyim avantaj sağlar ama şart değil. Mutfak, servis ve hijyen eğitimini biz veriyoruz.',
+  },
+  {
+    s: 'Tedarik nasıl yapılıyor?',
+    c: 'Tavuk, kaplama karışımı ve soslar anlaşmalı tedarikçilerimizden gelir. Lezzetin her şubede aynı olması için bu şart.',
+  },
+];
+---
+<Temel
+  baslik="Franchise"
+  aciklama="Time Fried Chicken franchise başvurusu: süreç, aradığımız özellikler ve başvuru formu."
+>
+
+<main id="ana-icerik">
+
+  <section class="hero">
+    <div class="kapsayici hero-ic">
+      <div>
+        <span class="ust-etiket">Franchise</span>
+        <h1>Aynı çıtırlık, <span>sizin şubenizde.</span></h1>
+        <p class="hero-slogan">
+          Time Fried Chicken'ı kendi bölgenizde işletmek isterseniz tanışalım.
+          Menü, tedarik zinciri ve mutfak düzeni hazır; siz lokasyon ve işletmecilik tarafına odaklanın.
+        </p>
+        <div class="hero-dugmeler">
+          <a class="dugme dugme--birincil" href="#basvuru">Başvuru formu <Ikon id="u-ok" boyut={18} /></a>
+          <a class="dugme dugme--ikincil" href={`tel:${isletme.telefonHam}`}>{isletme.telefon}</a>
+        </div>
+      </div>
+      <div class="hero-gorsel">Şube / mekân fotoğrafı</div>
+    </div>
+  </section>
+
+  <section class="bolum">
+    <div class="kapsayici">
+      <div class="bolum-baslik">
+        <span class="ust-etiket">Süreç</span>
+        <h2>Başvurudan açılışa</h2>
+        <p>Dört adımda ilerliyoruz. Her adımda ne olacağını önceden konuşuyoruz.</p>
+      </div>
+
+      <div class="adim-izgara">
+        {adimlar.map((a, i) => (
+          <div class="adim">
+            <div class="adim-no" aria-hidden="true">{i + 1}</div>
+            <h3>{a.baslik}</h3>
+            <p>{a.metin}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bolum bolum--krem">
+    <div class="kapsayici ikili">
+      <div>
+        <span class="ust-etiket">Aradıklarımız</span>
+        <h2>Nasıl bir ortak arıyoruz?</h2>
+        <p>Şube sayısını hızla artırmak yerine, işini iyi yapan az sayıda şube açmayı tercih ediyoruz.</p>
+        <ul class="olcut-liste">
+          {olcutler.map((o) => (
+            <li><Ikon id="u-ok" boyut={18} /><span>{o}</span></li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <span class="ust-etiket">Ne sağlıyoruz</span>
+        <h2>Size neler veriyoruz?</h2>
+        <ul class="olcut-liste">
+          <li><Ikon id="u-ok" boyut={18} /><span>Marka kullanım hakkı ve görsel kimlik</span></li>
+          <li><Ikon id="u-ok" boyut={18} /><span>Menü, reçeteler ve porsiyon standartları</span></li>
+          <li><Ikon id="u-ok" boyut={18} /><span>Anlaşmalı tedarikçiler ve malzeme tedariği</span></li>
+          <li><Ikon id="u-ok" boyut={18} /><span>Mutfak kurulumu ve ekipman listesi</span></li>
+          <li><Ikon id="u-ok" boyut={18} /><span>Personel eğitimi ve açılış desteği</span></li>
+          <li><Ikon id="u-ok" boyut={18} /><span>Paket servis platformlarına kayıt desteği</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="bolum">
+    <div class="kapsayici">
+      <div class="bolum-baslik">
+        <span class="ust-etiket">Sık sorulanlar</span>
+        <h2>Merak edilenler</h2>
+      </div>
+      <div class="sss" style="margin-inline:auto">
+        {sss.map((k) => (
+          <details>
+            <summary>{k.s}</summary>
+            <p>{k.c}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bolum bolum--krem" id="basvuru">
+    <div class="kapsayici">
+      <div class="bolum-baslik">
+        <span class="ust-etiket">Başvuru</span>
+        <h2>Franchise başvuru formu</h2>
+        <p>Bilgilerinizi bırakın, uygun olduğunuzu düşünürsek sizi arayalım.</p>
+      </div>
+
+      <form class="form" method="post" action="/api/franchise" style="margin-inline:auto">
+        <div class="form-satir">
+          <div class="alan">
+            <label for="ad">Ad soyad <span class="zorunlu" aria-hidden="true">*</span></label>
+            <input type="text" id="ad" name="ad" required autocomplete="name" placeholder=" " maxlength="80" />
+          </div>
+          <div class="alan">
+            <label for="telefon">Telefon <span class="zorunlu" aria-hidden="true">*</span></label>
+            <input type="tel" id="telefon" name="telefon" required autocomplete="tel"
+                   placeholder=" " maxlength="20" inputmode="tel" />
+          </div>
+        </div>
+
+        <div class="form-satir">
+          <div class="alan">
+            <label for="eposta">E-posta <span class="zorunlu" aria-hidden="true">*</span></label>
+            <input type="email" id="eposta" name="eposta" required autocomplete="email" placeholder=" " maxlength="120" />
+          </div>
+          <div class="alan">
+            <label for="sehir">Şehir / ilçe <span class="zorunlu" aria-hidden="true">*</span></label>
+            <input type="text" id="sehir" name="sehir" required placeholder=" " maxlength="80" />
+          </div>
+        </div>
+
+        <div class="form-satir">
+          <div class="alan">
+            <label for="butce">Yatırım bütçesi</label>
+            <select id="butce" name="butce">
+              <option value="">Seçiniz</option>
+              <option value="1">1 milyon TL altı</option>
+              <option value="2">1 – 2 milyon TL</option>
+              <option value="3">2 – 4 milyon TL</option>
+              <option value="4">4 milyon TL üzeri</option>
+              <option value="0">Henüz net değil</option>
+            </select>
+          </div>
+          <div class="alan">
+            <label for="lokasyon">Hazır bir lokasyonunuz var mı?</label>
+            <select id="lokasyon" name="lokasyon">
+              <option value="yok">Hayır, arıyorum</option>
+              <option value="var">Evet, dükkanım hazır</option>
+              <option value="isletme">Evet, mevcut işletmemi dönüştürmek istiyorum</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="alan">
+          <label for="mesaj">Eklemek istedikleriniz</label>
+          <textarea id="mesaj" name="mesaj" maxlength="2000" placeholder=" "></textarea>
+          <span class="yardim">Deneyiminiz, düşündüğünüz bölge ya da sorularınız.</span>
+        </div>
+
+        <div class="bal-tuzagi" aria-hidden="true">
+          <label for="website">Bu alanı boş bırakın</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+        <input type="hidden" name="surum" value={YASAL.aydinlatmaSurumu} />
+
+        <label class="onay">
+          <input type="checkbox" name="aydinlatma" required />
+          <span><a href="/kvkk/">KVKK Aydınlatma Metni'ni</a> okudum. Başvurumun değerlendirilmesi için
+          verdiğim bilgilerin işlenmesini biliyorum.</span>
+        </label>
+
+        <label class="onay">
+          <input type="checkbox" name="pazarlama" />
+          <span>Kampanya ve duyurular için benimle iletişime geçilmesine <strong>açık rıza</strong>
+          veriyorum. (İsteğe bağlı, işaretlemeseniz de başvurunuz değerlendirilir.)</span>
+        </label>
+
+        <div>
+          <button class="dugme dugme--marka" type="submit">Başvuruyu gönder</button>
+        </div>
+
+        <p class="form-not">
+          <span class="zorunlu">*</span> işaretli alanlar zorunludur. Başvurunuz en fazla
+          <strong>2 yıl</strong> saklanır, sonrasında silinir. Kazanç ya da geri ödeme süresi
+          taahhüdünde bulunmuyoruz; rakamlar ön görüşmede lokasyona göre konuşulur.
+        </p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+</Temel>

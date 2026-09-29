@@ -1,0 +1,139 @@
+---
+import Metin from '../layouts/Metin.astro';
+import { isletme } from '../data/isletme.js';
+import { YASAL } from '../data/yasal.js';
+---
+<Metin
+  baslik="KVKK Aydınlatma Metni"
+  aciklama="6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında aydınlatma metni."
+  guncelleme={YASAL.aydinlatmaSurumu}
+>
+
+<p>
+  Bu metin, 6698 sayılı Kişisel Verilerin Korunması Kanunu'nun ("KVKK") 10. maddesi ve
+  Aydınlatma Yükümlülüğünün Yerine Getirilmesinde Uyulacak Usul ve Esaslar Hakkında Tebliğ
+  uyarınca hazırlanmıştır.
+</p>
+
+<h2>1. Veri sorumlusu</h2>
+<table>
+  <tbody>
+    <tr><th>Unvan</th><td><span class="yer-tutucu">{isletme.unvan}</span></td></tr>
+    <tr><th>Adres</th><td>{isletme.adres}, {isletme.semt}, {isletme.postaKodu} {isletme.ilce}</td></tr>
+    <tr><th>Telefon</th><td>{isletme.telefon}</td></tr>
+    <tr><th>Başvuru e-postası</th><td><span class="yer-tutucu">{YASAL.basvuruEposta}</span></td></tr>
+  </tbody>
+</table>
+
+<h2>2. İşlenen kişisel veriler, amaçlar ve hukuki sebepler</h2>
+<table>
+  <thead>
+    <tr><th>Durum</th><th>İşlenen veriler</th><th>Amaç</th><th>Hukuki sebep (KVKK md. 5)</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>İletişim formu</td>
+      <td>Ad soyad, e-posta, telefon, mesaj içeriği</td>
+      <td>Talebinize yanıt vermek</td>
+      <td>md. 5/2-f: meşru menfaat</td>
+    </tr>
+    <tr>
+      <td>Franchise başvurusu</td>
+      <td>Ad soyad, telefon, e-posta, şehir, yatırım bütçesi aralığı, mesaj</td>
+      <td>Başvuruyu değerlendirmek, görüşme yapmak</td>
+      <td>md. 5/2-c: sözleşmenin kurulması · md. 5/2-f: meşru menfaat</td>
+    </tr>
+    <tr>
+      <td>Site ziyareti</td>
+      <td>IP adresi, tarayıcı ve cihaz bilgisi, istenen sayfa, tarih-saat</td>
+      <td>Güvenlik, hata tespiti, yasal saklama</td>
+      <td>md. 5/2-f · 5651 sayılı Kanun</td>
+    </tr>
+    <tr>
+      <td>Ziyaret istatistikleri</td>
+      <td>Çerez kimliği, yaklaşık konum, gezinme davranışı</td>
+      <td>Sitenin hangi bölümlerinin kullanıldığını ölçmek</td>
+      <td><strong>Açık rıza</strong> (çerez onayı vermeniz hâlinde)</td>
+    </tr>
+    <tr>
+      <td>Kampanya bildirimi</td>
+      <td>E-posta, telefon</td>
+      <td>Kampanya ve duyuru göndermek</td>
+      <td><strong>Açık rıza</strong> · 6563 sayılı Kanun ve İYS kaydı</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>
+  Formlarda sizden <strong>TC kimlik numarası, doğum tarihi, sağlık bilgisi</strong> gibi veriler
+  istenmez. Bu tür bilgileri mesaj alanına yazmamanızı rica ederiz.
+</p>
+
+<h2>3. Kişisel verilerin toplanma yöntemi</h2>
+<p>
+  Verileriniz, bu sitedeki formları doldurmanız, telefonla aramanız ya da siteyi ziyaret etmeniz
+  sırasında elektronik ortamda otomatik ve kısmen otomatik yollarla toplanır.
+</p>
+
+<h2>4. Verilerin aktarılması</h2>
+<p>
+  Verileriniz, hizmet aldığımız aşağıdaki kuruluşlara veri işleyen sıfatıyla aktarılır.
+  Bu kuruluşlar yurt dışında bulunduğundan aktarım, KVKK md. 9 kapsamında
+  <span class="yer-tutucu">Kurul'un standart sözleşmesi imzalanarak ve Kurum'a bildirilerek</span>
+  gerçekleştirilir.
+</p>
+<table>
+  <thead><tr><th>Kuruluş</th><th>Ülke</th><th>Amaç</th></tr></thead>
+  <tbody>
+    {YASAL.hizmetSaglayicilar.map((h) => (
+      <tr><td>{h.ad}</td><td>{h.ulke}</td><td>{h.amac}</td></tr>
+    ))}
+  </tbody>
+</table>
+<p>
+  Bunların dışında verileriniz, yalnızca hukuki yükümlülüğümüz doğduğunda yetkili kamu kurum ve
+  kuruluşlarıyla paylaşılır. Üçüncü kişilere satılmaz, pazarlama amacıyla devredilmez.
+</p>
+
+<h2>5. Saklama süreleri</h2>
+<ul>
+  <li><strong>İletişim formu kayıtları:</strong> 1 yıl</li>
+  <li><strong>Franchise başvuruları:</strong> 2 yıl (başvurunuz olumlu sonuçlanırsa sözleşme süresince)</li>
+  <li><strong>Sunucu kayıtları:</strong> 5651 sayılı Kanun kapsamında öngörülen süre</li>
+  <li><strong>Çerez verileri:</strong> Çerez Politikası'ndaki süreler kadar</li>
+</ul>
+<p>Süre dolduğunda veriler silinir, yok edilir veya anonim hâle getirilir.</p>
+
+<h2>6. Haklarınız (KVKK md. 11)</h2>
+<p>Veri sahibi olarak bize başvurarak şu haklarınızı kullanabilirsiniz:</p>
+<ul>
+  <li>Kişisel verinizin işlenip işlenmediğini öğrenme, işlenmişse bilgi talep etme</li>
+  <li>İşlenme amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme</li>
+  <li>Yurt içinde veya yurt dışında aktarıldığı üçüncü kişileri bilme</li>
+  <li>Eksik veya yanlış işlenmişse düzeltilmesini isteme</li>
+  <li>Kanundaki şartlar çerçevesinde silinmesini veya yok edilmesini isteme</li>
+  <li>Düzeltme, silme ve yok etme işlemlerinin aktarıldığı üçüncü kişilere bildirilmesini isteme</li>
+  <li>Münhasıran otomatik sistemlerle analiz edilmesi sonucu aleyhinize bir sonuç çıkmasına itiraz etme</li>
+  <li>Kanuna aykırı işleme nedeniyle zarara uğramanız hâlinde zararın giderilmesini talep etme</li>
+</ul>
+
+<h2>7. Başvuru yolu</h2>
+<p>
+  Taleplerinizi <span class="yer-tutucu">{YASAL.basvuruEposta}</span> adresine e-posta ile ya da
+  yukarıdaki adrese yazılı olarak iletebilirsiniz. Başvurunuz en geç <strong>30 gün</strong> içinde
+  sonuçlandırılır. Başvurunun kimliğinizi doğrulayacak bilgileri içermesi gerekir.
+</p>
+<p>
+  Yanıtımızı yetersiz bulursanız ya da süresi içinde yanıt alamazsanız Kişisel Verileri Koruma
+  Kurulu'na şikâyette bulunabilirsiniz.
+</p>
+
+<h2>8. Değişiklikler</h2>
+<p>
+  Bu metin gerektiğinde güncellenir. Güncel sürüm her zaman bu sayfada yayımlanır ve sayfanın
+  başında son güncelleme tarihi belirtilir.
+</p>
+
+<p style="margin-top:2em"><a href="/cerez-politikasi/">Çerez Politikası</a> · <a href="/yasal-bilgiler/">Yasal Bilgiler</a></p>
+
+</Metin>

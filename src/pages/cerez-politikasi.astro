@@ -1,0 +1,81 @@
+---
+import Metin from '../layouts/Metin.astro';
+import { YASAL } from '../data/yasal.js';
+---
+<Metin
+  baslik="Çerez Politikası"
+  aciklama="Time Fried Chicken sitesinde kullanılan çerezler, amaçları ve süreleri."
+  guncelleme={YASAL.cerezSurumu}
+>
+
+<h2>Kısaca</h2>
+<p>
+  Siteye girdiğinizde <strong>hiçbir analitik çerez çalışmaz.</strong> Sayfanın altında çıkan
+  kutudan "Kabul et" demediğiniz sürece istatistik toplanmaz ve tarayıcınıza Google Analytics
+  çerezi yazılmaz. "Reddet" derseniz ya da hiç dokunmazsanız site yine tam olarak çalışır.
+</p>
+
+<h2>Çerez nedir?</h2>
+<p>
+  Çerez, ziyaret ettiğiniz sitenin tarayıcınıza kaydettiği küçük bir metin dosyasıdır. Sitenin
+  sizi hatırlamasını sağlar. Bu sitede çerezler yalnızca iki iş için kullanılır: çerez tercihinizi
+  hatırlamak ve (onay verirseniz) ziyaret istatistiği toplamak.
+</p>
+
+<h2>Kullanılan çerezler</h2>
+<table>
+  <thead>
+    <tr><th>Çerez</th><th>Türü</th><th>Amacı</th><th>Süresi</th><th>Sağlayıcı</th></tr>
+  </thead>
+  <tbody>
+    {YASAL.cerezler.map((c) => (
+      <tr>
+        <td><code>{c.ad}</code></td>
+        <td>{c.tur}</td>
+        <td>{c.amac}</td>
+        <td>{c.sure}</td>
+        <td>{c.saglayici}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+<h3>Zorunlu çerez</h3>
+<p>
+  <code>cerez_onay</code> çerezi yalnızca kararınızı ("kabul" veya "ret") tutar. İçinde sizi
+  tanımlayan başka bir bilgi yoktur. Bu çerez olmasaydı her sayfada tercihinizi yeniden sormamız
+  gerekirdi, bu yüzden zorunlu kabul edilir ve açık rıza gerektirmez.
+</p>
+
+<h3>Analitik çerezler</h3>
+<p>
+  Google Analytics çerezleri, hangi sayfaların ne kadar ziyaret edildiğini anlamak için kullanılır.
+  Bu çerezler <strong>yalnızca siz onay verdiğinizde</strong> yüklenir. Hesabımızda reklam
+  kişiselleştirme ve Google Signals kapalıdır, veri saklama süresi 14 aya ayarlanmıştır.
+</p>
+
+<h2>Kullanmadığımız şeyler</h2>
+<ul>
+  <li>Reklam ve yeniden pazarlama çerezleri</li>
+  <li>Sosyal medya takip pikselleri</li>
+  <li>Gömülü harita, video veya yazı tipi servisleri (yazı tipleri kendi sunucumuzdan yüklenir)</li>
+</ul>
+
+<h2>Tercihinizi değiştirme</h2>
+<p>
+  Kararınızı istediğiniz zaman <a href="/cerez-tercihi/">Çerez Tercihi</a> sayfasından
+  değiştirebilirsiniz. Onayınızı geri çektiğinizde Google Analytics çerezleri silinir.
+</p>
+<p>
+  Ayrıca tarayıcınızın ayarlarından da tüm çerezleri silebilir veya engelleyebilirsiniz. Bunu
+  yaparsanız <code>cerez_onay</code> çerezi de silineceği için tercihiniz tekrar sorulur.
+</p>
+
+<h2>Sunucu kayıtları</h2>
+<p>
+  Çerezlerden bağımsız olarak, siteyi barındıran Cloudflare her isteğin IP adresini ve tarayıcı
+  bilgisini kaydeder. Bu kayıtlar güvenlik amaçlıdır, çerez değildir ve onaya bağlı değildir.
+  Ayrıntı için <a href="/kvkk/">KVKK Aydınlatma Metni</a>.
+</p>
+
+</Metin>

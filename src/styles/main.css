@@ -432,7 +432,8 @@ table.saatler td:last-child { text-align: right; }
 .tablo-aciklama b { color: var(--metin); font-size: 1.05rem; }
 
 .tablo-kaydir {
-  overflow-x: auto; border: 1px solid var(--cizgi); border-radius: var(--r-kart);
+  overflow-x: auto;
+  contain: paint; /* tablo genişliği sayfayı yana kaydırmasın */ border: 1px solid var(--cizgi); border-radius: var(--r-kart);
   background: var(--beyaz); -webkit-overflow-scrolling: touch;
 }
 .tablo-kaydir:focus-visible { outline: 3px solid var(--amber-koyu); outline-offset: 2px; }
@@ -542,3 +543,100 @@ table.saatler td:last-child { text-align: right; }
 .aci-1 { background: var(--sari); color: #3a2a00; }
 .aci-2 { background: var(--kirmizi); color: var(--beyaz); }
 .aci-etiket svg { flex: none; }
+
+/* ---------- metin sayfaları (yasal metinler, uzun içerik) ---------- */
+.metin { max-width: 760px; margin-inline: auto; }
+.metin h2 { font-size: clamp(1.25rem, 2.6vw, 1.55rem); margin-top: 2em; }
+.metin h2:first-of-type { margin-top: 1em; }
+.metin h3 { font-size: 1.05rem; margin-top: 1.6em; }
+.metin p, .metin li { color: #33373d; }
+.metin ul, .metin ol { padding-left: 1.2em; margin: 0 0 1em; }
+.metin li { margin-bottom: .45em; }
+.metin table { width: 100%; border-collapse: collapse; font-size: .92rem; margin: 1em 0 1.6em; }
+.metin th, .metin td { text-align: left; padding: 10px 12px; border: 1px solid var(--cizgi); vertical-align: top; }
+.metin th { background: var(--krem); font-weight: 700; }
+.metin .tarih { color: var(--metin-soluk); font-size: .88rem; }
+.yer-tutucu {
+  background: #fff3cd; border-bottom: 2px dotted #d3a611; padding: 0 .25em; font-weight: 600;
+}
+
+/* ---------- formlar ---------- */
+.form { display: grid; gap: 18px; max-width: 620px; }
+.form-satir { display: grid; gap: 18px; }
+@media (min-width: 620px) { .form-satir { grid-template-columns: 1fr 1fr; } }
+
+.alan { display: grid; gap: 6px; }
+.alan > label { font-weight: 600; font-size: .94rem; }
+.alan .yardim { font-size: .82rem; color: var(--metin-soluk); }
+.alan input, .alan select, .alan textarea {
+  font: inherit; font-size: 1rem; color: var(--metin);
+  padding: .72em .9em; border: 1px solid #cfd4da; border-radius: 12px;
+  background: var(--beyaz); width: 100%;
+}
+.alan textarea { min-height: 130px; resize: vertical; }
+.alan input:focus-visible, .alan select:focus-visible, .alan textarea:focus-visible {
+  outline: 3px solid var(--sari-koyu); outline-offset: 1px; border-color: var(--lacivert);
+}
+.alan input:required:invalid:not(:placeholder-shown) { border-color: var(--kirmizi); }
+.zorunlu { color: var(--kirmizi); }
+
+.onay {
+  display: flex; gap: .7em; align-items: flex-start;
+  font-size: .92rem; line-height: 1.5; padding: 12px 14px;
+  border: 1px solid var(--cizgi); border-radius: 12px; background: #fafafa;
+}
+.onay input { margin-top: .25em; width: 18px; height: 18px; accent-color: var(--kirmizi); flex: none; }
+
+.bal-tuzagi { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.form-not { font-size: .84rem; color: var(--metin-soluk); margin: 0; }
+
+/* ---------- franchise sayfası ---------- */
+.adim-izgara { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.adim {
+  background: var(--beyaz); border: 1px solid var(--cizgi); border-radius: var(--r-kart);
+  padding: 22px 20px; box-shadow: var(--golge);
+}
+.adim-no {
+  display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%;
+  background: var(--kirmizi); color: var(--beyaz); font-weight: 800; font-size: .95rem; margin-bottom: 12px;
+}
+.adim h3 { margin-bottom: .35em; }
+.adim p { margin: 0; font-size: .92rem; color: var(--metin-soluk); }
+
+.olcut-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.olcut-liste li { display: flex; gap: 10px; align-items: flex-start; }
+.olcut-liste svg { flex: none; color: var(--sari-koyu); margin-top: 3px; }
+
+/* ---------- SSS (details) ---------- */
+.sss { display: grid; gap: 10px; max-width: 760px; }
+.sss details {
+  border: 1px solid var(--cizgi); border-radius: 12px; background: var(--beyaz); padding: 4px 16px;
+}
+.sss summary { cursor: pointer; font-weight: 700; padding: 14px 0; list-style: none; display: flex; gap: 10px; align-items: center; }
+.sss summary::-webkit-details-marker { display: none; }
+.sss summary::before { content: '+'; color: var(--kirmizi); font-size: 1.3rem; line-height: 1; width: 1ch; }
+.sss details[open] summary::before { content: '–'; }
+.sss details p { margin: 0 0 14px; font-size: .94rem; color: #33373d; }
+
+/* ---------- teşekkür / durum sayfaları ---------- */
+.durum-ikon {
+  width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center;
+  margin: 0 auto 18px; background: rgba(46, 125, 50, .12); color: var(--yesil);
+}
+
+/* bölüm başlığındaki h1, h2 ile aynı ölçüde görünür (her sayfada tek h1 olsun diye) */
+.bolum-baslik h1 { font-size: clamp(1.6rem, 3.6vw, 2.4rem); }
+
+/* ---------- mobilde yatay taşma koruması ---------- */
+/* clip, hidden'dan farklı olarak kaydırma kutusu oluşturmaz; sticky başlıkları bozmaz */
+html, body { overflow-x: clip; }
+
+/* metin sayfalarındaki geniş tablolar kendi içinde yana kaysın */
+.metin table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: normal;
+}
+.metin table thead, .metin table tbody { display: table; width: 100%; }

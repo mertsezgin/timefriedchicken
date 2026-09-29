@@ -1,0 +1,146 @@
+---
+import Temel from '../layouts/Temel.astro';
+import Ikon from '../components/Ikon.astro';
+import { isletme } from '../data/isletme.js';
+import { YASAL } from '../data/yasal.js';
+---
+<Temel
+  sayfa="iletisim"
+  baslik="İletişim"
+  aciklama={`Time Fried Chicken iletişim: ${isletme.semt}, ${isletme.ilce}. Telefon ${isletme.telefon}. Çalışma saatleri ve ulaşım bilgisi.`}
+>
+
+<main id="ana-icerik">
+
+  <section class="bolum">
+    <div class="kapsayici">
+      <div class="bolum-baslik">
+        <span class="ust-etiket">İletişim</span>
+        <h1 style="font-size:clamp(1.8rem,4vw,2.5rem)">Bize ulaşın</h1>
+        <p>Sipariş, öneri ya da sorularınız için telefonla arayabilir, mesaj yazabilirsiniz.</p>
+      </div>
+
+      <div class="ikili">
+        <div>
+          <ul class="bilgi-liste" style="margin-bottom:26px">
+            <li>
+              <Ikon id="u-konum" boyut={22} />
+              <span>
+                <b>Adres</b><br />
+                {isletme.adres}<br />
+                {isletme.semt}, {isletme.postaKodu} {isletme.ilce}
+              </span>
+            </li>
+            <li>
+              <Ikon id="u-telefon" boyut={22} />
+              <span>
+                <b>Telefon</b><br />
+                <a href={`tel:${isletme.telefonHam}`}>{isletme.telefon}</a> ·
+                <a href={isletme.whatsapp} target="_blank" rel="noopener">WhatsApp</a>
+              </span>
+            </li>
+            <li>
+              <Ikon id="u-saat" boyut={22} />
+              <div style="flex:1">
+                <b>Çalışma saatleri</b>
+                <table class="saatler" style="margin-top:6px">
+                  <caption class="gizli-metin">Çalışma saatleri</caption>
+                  <tbody>
+                    {isletme.saatler.map((s) => (
+                      <tr><th scope="row">{s.gun}</th><td>{s.saat}</td></tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </li>
+          </ul>
+
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <a class="dugme dugme--marka" href={`tel:${isletme.telefonHam}`}>
+              <Ikon id="u-telefon" boyut={18} /> Hemen ara
+            </a>
+            <a class="dugme dugme--ikincil" href="/siparis/">Sipariş seçenekleri</a>
+          </div>
+        </div>
+
+        <div>
+          <a class="harita-yer" href={isletme.haritaLinki} target="_blank" rel="noopener"
+             style="background:#f2f3f5;border-color:var(--cizgi);color:var(--metin)">
+            <Ikon id="u-konum" boyut={28} />
+            <span>Google Haritalar'da aç</span>
+            <small style="color:var(--metin-soluk)">{isletme.adres}, {isletme.semt}</small>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bolum bolum--krem">
+    <div class="kapsayici">
+      <div class="bolum-baslik">
+        <span class="ust-etiket">Mesaj</span>
+        <h2>Bize yazın</h2>
+        <p>Formu doldurun, en kısa sürede dönelim. Acil durumlar için telefonla aramanız daha hızlı olur.</p>
+      </div>
+
+      <form class="form" method="post" action="/api/iletisim" style="margin-inline:auto">
+        <div class="form-satir">
+          <div class="alan">
+            <label for="ad">Ad soyad <span class="zorunlu" aria-hidden="true">*</span></label>
+            <input type="text" id="ad" name="ad" required autocomplete="name" placeholder=" " maxlength="80" />
+          </div>
+          <div class="alan">
+            <label for="telefon">Telefon</label>
+            <input type="tel" id="telefon" name="telefon" autocomplete="tel"
+                   placeholder=" " maxlength="20" inputmode="tel" />
+          </div>
+        </div>
+
+        <div class="alan">
+          <label for="eposta">E-posta <span class="zorunlu" aria-hidden="true">*</span></label>
+          <input type="email" id="eposta" name="eposta" required autocomplete="email" placeholder=" " maxlength="120" />
+        </div>
+
+        <div class="alan">
+          <label for="konu">Konu</label>
+          <select id="konu" name="konu">
+            <option value="oneri">Öneri veya görüş</option>
+            <option value="siparis">Sipariş hakkında</option>
+            <option value="isbirligi">İş birliği</option>
+            <option value="diger">Diğer</option>
+          </select>
+        </div>
+
+        <div class="alan">
+          <label for="mesaj">Mesajınız <span class="zorunlu" aria-hidden="true">*</span></label>
+          <textarea id="mesaj" name="mesaj" required maxlength="2000" placeholder=" "></textarea>
+          <span class="yardim">En fazla 2000 karakter.</span>
+        </div>
+
+        <div class="bal-tuzagi" aria-hidden="true">
+          <label for="website">Bu alanı boş bırakın</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+        <input type="hidden" name="surum" value={YASAL.aydinlatmaSurumu} />
+
+        <label class="onay">
+          <input type="checkbox" name="aydinlatma" required />
+          <span><a href="/kvkk/">KVKK Aydınlatma Metni'ni</a> okudum. Mesajıma dönüş yapılması için
+          iletişim bilgilerimin işlenmesini biliyorum.</span>
+        </label>
+
+        <div>
+          <button class="dugme dugme--marka" type="submit">Mesajı gönder</button>
+        </div>
+
+        <p class="form-not">
+          <span class="zorunlu">*</span> işaretli alanlar zorunludur. Mesajınız yalnızca size dönüş
+          yapmak için kullanılır, pazarlama amaçlı kullanılmaz.
+        </p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+</Temel>

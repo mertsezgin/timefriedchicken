@@ -4,11 +4,13 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "timefriedchicken",
+  "main": "src/worker.js",
   "compatibility_date": "2026-04-26",
   "compatibility_flags": ["nodejs_compat"],
   "observability": { "enabled": true },
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
     "not_found_handling": "404-page"
   }
 }
