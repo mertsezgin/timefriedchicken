@@ -641,3 +641,35 @@ html, body { overflow-x: clip; }
   white-space: normal;
 }
 .metin table thead, .metin table tbody { display: table; width: 100%; }
+
+/* ---------- sabit düğmeler: çerez tercihi (sol alt) ve yukarı çık (sağ alt) ---------- */
+.sabit-dugme {
+  position: fixed; bottom: 18px; z-index: 55;
+  width: 44px; height: 44px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--lacivert); color: var(--beyaz);
+  box-shadow: 0 4px 14px rgba(26, 29, 33, .28);
+  text-decoration: none; border: 1px solid rgba(255, 255, 255, .14);
+  transition: background-color .15s, transform .15s;
+}
+.sabit-dugme:hover { background: var(--kirmizi); transform: translateY(-2px); }
+.cerez-dugme { left: 18px; opacity: .82; }
+.cerez-dugme:hover { opacity: 1; }
+.yukari { right: 18px; }
+
+/* çerez bandı açıkken düğmeler bandın üstüne çıksın */
+body:has(.cerez) .sabit-dugme { bottom: calc(18px + 132px); }
+@media (min-width: 800px) { body:has(.cerez) .sabit-dugme { bottom: calc(18px + 84px); } }
+
+/* yukarı düğmesi yalnızca biraz kaydırınca görünsün (destekleyen tarayıcılarda) */
+@supports (animation-timeline: scroll()) {
+  .yukari {
+    opacity: 0; visibility: hidden;
+    animation: yukari-belir linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 350px 550px;
+  }
+  @keyframes yukari-belir { to { opacity: 1; visibility: visible; } }
+}
+
+@media print { .sabit-dugme, .cerez { display: none; } }

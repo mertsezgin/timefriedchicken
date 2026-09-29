@@ -1,5 +1,55 @@
 ---
-/** public/ikonlar.svg içindeki sembolü gösterir. Tek dosya, önbelleklenir. */
+/**
+ * Tek ikon bileşeni.
+ *
+ * İkonlar derleme sırasında sayfanın içine gömülür (astro-icon): ne ayrı bir dosya
+ * isteği ne de dışarıdan bir istek olur. Çoğu ikon Lucide setinden gelir; Lucide'da
+ * karşılığı olmayan birkaç tanesi src/icons/ altındaki kendi çizimlerimizdir.
+ */
+import { Icon } from 'astro-icon/components';
+
+const ESLESME = {
+  // kategoriler
+  'i-hamburger': 'lucide:sandwich',
+  'i-special': 'lucide:star',
+  'i-wings': 'lucide:drumstick',
+  'i-tenders': 'tenders',          // kendi çizimimiz
+  'i-icecek': 'lucide:cup-soda',
+  'i-menu-tumu': 'lucide:utensils',
+  'i-sos': 'lucide:droplet',
+
+  // alerjenler
+  'a-gluten': 'lucide:wheat',
+  'a-sut': 'lucide:milk',
+  'a-yumurta': 'lucide:egg',
+  'a-balik': 'lucide:fish',
+  'a-kabuklular': 'lucide:shrimp',
+  'a-yerfistigi': 'yerfistigi',    // kendi çizimimiz
+  'a-soya': 'lucide:bean',
+  'a-sertkabuklu': 'lucide:nut',
+  'a-kereviz': 'lucide:leafy-green',
+  'a-hardal': 'hardal',            // kendi çizimimiz
+  'a-susam': 'susam',              // kendi çizimimiz
+  'a-sulfit': 'lucide:flask-conical',
+  'a-acibakla': 'acibakla',        // kendi çizimimiz
+  'a-yumusakcalar': 'lucide:shell',
+
+  // arayüz
+  'u-menu': 'lucide:menu',
+  'u-konum': 'lucide:map-pin',
+  'u-telefon': 'lucide:phone',
+  'u-saat': 'lucide:clock',
+  'u-uyari': 'lucide:triangle-alert',
+  'u-paket': 'lucide:package',
+  'u-ok': 'lucide:arrow-right',
+  'u-yukari': 'lucide:arrow-up',
+  'u-cerez': 'lucide:cookie',
+  'u-aci': 'lucide:flame',
+};
+
 const { id, boyut = 24, sinif = '' } = Astro.props;
+const ad = ESLESME[id];
+
+if (!ad) throw new Error(`Ikon: tanımsız ikon "${id}". src/components/Ikon.astro içindeki eşleşmeye ekleyin.`);
 ---
-<svg class={sinif} width={boyut} height={boyut} aria-hidden="true" focusable="false"><use href={`/ikonlar.svg#${id}`} /></svg>
+<Icon name={ad} class={sinif} size={boyut} aria-hidden="true" />

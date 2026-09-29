@@ -27,6 +27,13 @@ const suzgecKurallari = SUZGEC_ALERJENLERI.map((kod) => `
 .menu-liste:has(#f-${kod}:checked) .grup:not(:has(.urun:not(.s-${kod}))) .grup-bos { display: block; }`
 ).join('');
 
+// Yukarı düğmesi kategoriye bağlı: tıklayınca sayfa başa döner ama seçili kategori korunur
+// (kategori başlıklarında scroll-margin-top 100vh olduğu için hedef en üste denk geliyor).
+const yukariSeciciler = [
+  `body:not(:has(.grup:target)) .yukari-${ilk.kod}`,
+  ...kategoriler.map((k) => `body:has(#${k.kod}:target) .yukari-${k.kod}`),
+];
+
 const uretilenCss = `
 ${aktifSeciciler.join(',\n')} {
   border-color: var(--kirmizi); background: var(--kirmizi); color: var(--beyaz);
@@ -34,6 +41,8 @@ ${aktifSeciciler.join(',\n')} {
 ${aktifSeciciler.map((s) => `${s} .ikon-cerceve`).join(',\n')} {
   background: var(--sari); color: var(--lacivert);
 }
+.yukari-kat { display: none; }
+${yukariSeciciler.join(',\n')} { display: grid; }
 ${suzgecKurallari}`;
 
 const bant = `Fiyatlara <strong>KDV dahildir</strong> · Son güncelleme: <strong>${tarihYaz(guncelleme)}</strong>`;
@@ -140,5 +149,14 @@ const bant = `Fiyatlara <strong>KDV dahildir</strong> · Son güncelleme: <stron
   </section>
 
 </main>
+
+<Fragment slot="yukari">
+  {kategoriler.map((k) => (
+    <a class={`sabit-dugme yukari yukari-kat yukari-${k.kod}`} href={`#${k.kod}`} title="Yukarı çık">
+      <Ikon id="u-yukari" boyut={20} />
+      <span class="gizli-metin">Sayfanın başına dön</span>
+    </a>
+  ))}
+</Fragment>
 
 </Temel>

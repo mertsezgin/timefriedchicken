@@ -66,6 +66,7 @@ const menuOgeleri = [
 </head>
 <body>
 
+<span id="ust" aria-hidden="true"></span>
 <a class="atla" href="#ana-icerik">İçeriğe atla</a>
 
 {bant && (
@@ -148,13 +149,35 @@ const menuOgeleri = [
     </div>
 
     <div class="kunye">
-      <p>Ticari unvan: {isletme.unvan} · Adres: {isletme.adres}, {isletme.semt}, {isletme.postaKodu} {isletme.ilce} · Vergi dairesi: {isletme.vergiDairesi} · Sicil no: {isletme.sicil}</p>
-      <p>Fiyatlara KDV dahildir. Görseller temsilidir. © {new Date().getFullYear()} {isletme.marka}</p>
+      <p>© {new Date().getFullYear()} {isletme.marka} {isletme.markaAlt} · {isletme.semt}, {isletme.ilce}</p>
     </div>
   </div>
 </footer>
 
-<slot name="banner" />
+<!-- sabit düğmeler: çerez tercihi (sol), yukarı çık (sağ) -->
+<a class="sabit-dugme cerez-dugme" href="/cerez-tercihi/" title="Çerez tercihi">
+  <Ikon id="u-cerez" boyut={20} />
+  <span class="gizli-metin">Çerez tercihini değiştir</span>
+</a>
+
+<slot name="yukari">
+  <a class="sabit-dugme yukari" href="#ust" title="Yukarı çık">
+    <Ikon id="u-yukari" boyut={20} />
+    <span class="gizli-metin">Sayfanın başına dön</span>
+  </a>
+</slot>
+
+<!-- çerez onayı: sunucu, tercih zaten kayıtlıysa ya da analitik kapalıysa bu bloğu kaldırır -->
+<aside class="cerez" id="cerez-banner" aria-label="Çerez tercihi">
+  <div class="kapsayici cerez-ic">
+    <p>Ziyaret istatistikleri için Google Analytics kullanmak istiyoruz. Onay vermezseniz hiçbir
+      analitik çerez çalışmaz. <a href="/cerez-politikasi/">Çerez politikası</a></p>
+    <form class="cerez-dugmeler" method="post" action="/api/cerez">
+      <button class="dugme dugme--ikincil" name="karar" value="ret" type="submit">Reddet</button>
+      <button class="dugme dugme--marka" name="karar" value="kabul" type="submit">Kabul et</button>
+    </form>
+  </div>
+</aside>
 
 </body>
 </html>

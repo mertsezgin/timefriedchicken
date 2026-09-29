@@ -56,6 +56,28 @@ gerçek sitenin yerini alma riski yok.
 4. Custom domains bölümünde timefriedchicken.com ve www bağlı olmalı.
    www → apex yönlendirmesi Cloudflare → Rules → Redirect Rules ile yapılır.
 
+### Google Analytics'i açma
+
+Ölçüm kimliğini bir gizli değişken olarak tanımlamak yeterli:
+
+```bash
+npx wrangler secret put GA_ID          # değer: G-XXXXXXXXXX
+```
+
+Bu tanımlanana kadar site hiç analitik çalıştırmaz ve **çerez onay kutusu da görünmez**
+(ortada onaylanacak bir şey olmadığı için). Tanımlandığı anda akış şöyle işler:
+
+1. Ziyaretçi siteye girer, sayfada hiçbir betik yoktur.
+2. Alt bantta onay kutusu çıkar: "Kabul et" / "Reddet".
+3. Kabul ederse sunucu `cerez_onay` çerezini yazar ve o andan sonra sayfalara
+   Google Analytics etiketini ekler (CSP'ye o yanıt için nonce eklenir).
+4. Reddederse karar saklanır, GA çerezleri silinir, kutu bir daha çıkmaz.
+5. Ziyaretçi kararını sol alttaki çerez düğmesinden ya da `/cerez-tercihi/` sayfasından
+   istediği zaman değiştirebilir.
+
+Yerelde denemek için `.dev.vars` dosyasına `GA_ID = "G-TEST12345"` yazıp
+`npx wrangler dev -c wrangler.onizleme.jsonc` çalıştırın.
+
 ### Yayın sonrası
 
 - `public/_headers` güvenlik başlıklarını ve önbellek sürelerini taşır.

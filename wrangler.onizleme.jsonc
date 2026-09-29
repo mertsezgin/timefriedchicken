@@ -4,5 +4,7 @@
   "main": "src/worker.js",
   "compatibility_date": "2026-04-26",
   "compatibility_flags": ["nodejs_compat"],
-  "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "404-page" }
+  "assets": { "directory": "./dist", "binding": "ASSETS",
+    // Worker önce çalışsın: çerez onayına göre sayfayı düzenleyebilmemiz için şart
+    "run_worker_first": true, "not_found_handling": "404-page" }
 }

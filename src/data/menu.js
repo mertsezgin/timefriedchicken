@@ -13,7 +13,7 @@ export const kategoriler = [
   { kod: 'wings',     ad: 'Wings',      ikon: 'i-wings' },
   { kod: 'tenders',   ad: 'Tenders',    ikon: 'i-tenders' },
   { kod: 'specials',  ad: 'Specials',   ikon: 'i-special' },
-  { kod: 'soslar',    ad: 'Soslar',     ikon: 'a-hardal' },
+  { kod: 'soslar',    ad: 'Soslar',     ikon: 'i-sos' },
   { kod: 'icecekler', ad: 'İçecekler',  ikon: 'i-icecek' },
 ];
 
