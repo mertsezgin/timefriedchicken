@@ -29,7 +29,7 @@ const logolar = { trendyol, yemeksepeti, getir, migrosyemek };
       <div class="platform-izgara">
         {platformlar.map((p) => (
           <a class="platform" href={p.url} rel="noopener">
-            <span class="platform-logo platform-logo--gorsel" aria-hidden="true"><Image src={logolar[p.kod]} alt="" width={48} height={48} loading="eager" /></span>
+            <span class="platform-logo platform-logo--gorsel" aria-hidden="true"><Image src={logolar[p.kod]} alt="" width={52} height={52} densities={[1, 2]} loading="eager" /></span>
             <span>
               <b>{p.ad}</b>
               <small>Uygulamada aç</small>

@@ -512,8 +512,9 @@ table.saatler td:last-child { text-align: right; }
 .alt-logo { height: 58px; width: auto; margin-bottom: 12px; }
 
 /* sipariş: platform logoları ve kurye görseli */
-.platform-logo--gorsel { background: var(--beyaz); border: 1px solid var(--cizgi); overflow: hidden; padding: 4px; }
-.platform-logo--gorsel img { width: 100%; height: 100%; object-fit: contain; }
+/* platform logoları kendi zemin renkleriyle kare görsel; çerçeveyi tam kaplasınlar */
+.platform-logo--gorsel { padding: 0; background: transparent; border: 0; overflow: hidden; }
+.platform-logo--gorsel img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .kurye-gorsel { max-width: 230px; margin-top: 14px; }
 
 /* ---------- veri henüz gelmemiş durumlar ---------- */
